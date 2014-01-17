@@ -1,0 +1,1 @@
+GreenBeanCasserole.html is a combined version of the rest of the utility.  All images are included as base64 strings and javascript is included in the file.  Update this after completing the rest of the project.
