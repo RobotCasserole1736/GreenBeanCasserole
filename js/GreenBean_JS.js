@@ -13,11 +13,9 @@
 
 
 /* constructor for goals_t objects */
-function goal_t(pyramid, high, mid, low, points)
+function goal_t(high, low, points)
 {
-    this.pyramid = pyramid;
     this.high = high;
-    this.mid = mid;
     this.low = low;
     this.points = points;
 }
@@ -32,18 +30,18 @@ function goal_t(pyramid, high, mid, low, points)
 
 /* autonomous */
     var auto_goals = new Array();
-    auto_goals[0] = new goal_t(0,0,0,0,0);
-    auto_goals[1] = new goal_t(0,0,0,0,0);
+    auto_goals[0] = new goal_t(0,0,0);
+    auto_goals[1] = new goal_t(0,0,0);
 
-    var auto_starting_disks = 0;
-    var auto_floor_disks = 0;
+    var auto_starting_ball = 0;
+    var auto_floor_ball = 0;
     
     var auto_score_stack = new Array();
 
 /* teleoperated */
     var tele_goals = new Array();
-    tele_goals[0] = new goal_t(0,0,0,0,0);
-    tele_goals[1] = new goal_t(0,0,0,0,0);
+    tele_goals[0] = new goal_t(0,0,0);
+    tele_goals[1] = new goal_t(0,0,0);
     
     var tele_front_court = 0;
     var tele_full_court = 0;
@@ -60,8 +58,8 @@ function goal_t(pyramid, high, mid, low, points)
 
 /* end game */
     var end_goals = new Array();
-    end_goals[0] = new goal_t(0,0,0,0,0);
-    end_goals[1] = new goal_t(0,0,0,0,0);
+    end_goals[0] = new goal_t(0,0,0);
+    end_goals[1] = new goal_t(0,0,0);
     
     var end_climb_level = new Array();
     end_climb_level[0] = 0;
@@ -82,8 +80,8 @@ function goal_t(pyramid, high, mid, low, points)
 function update_data()
 {
     /* autonomous data */
-        auto_starting_disks = document.getElementById('starting_disks').value;
-        auto_floor_disks = document.getElementById('floor_pickup').value;
+        auto_starting_ball = document.getElementById('starting_ball').value;
+        auto_floor_ball = document.getElementById('floor_pickup').value;
     
     /* teleop data */
         tele_front_court = document.frm_shooting_location.shooting_location[0];
@@ -98,12 +96,7 @@ function update_data()
         tele_robot_block = document.getElementById('robot_block').value;
         tele_robot_block_time = document.getElementById('robot_block_time').value;
         
-    /* end data */
-        end_climb_level[0] = document.getElementById('climb_level').value;
-        end_climb_level[1] = document.getElementById('climb_attempt').value;
-        end_climb_speed = document.getElementById('climb_speed').value;
-        
-    /* updatae points */
+    /* update points */
     update_points();
     
     /* update display */
@@ -176,13 +169,6 @@ function disp_update()
             document.getElementById("tele_robot_block_display").innerHTML = "It's Super Effective!";
             break;
     }
-        
-    /* end */
-    document.getElementById("end_pts_display").innerHTML = end_goals[0].points;   /* points made in end game */
-    document.getElementById("end_miss_display").innerHTML = end_goals[1].points;  /* points missed in end game */
-    document.getElementById("end_climb_display").innerHTML = end_climb_level[0];
-    document.getElementById("end_climb_attempt").innerHTML = end_climb_level[1];
-    document.getElementById("end_climb_speed_display").innerHTML = end_climb_speed;
     
     /* penalty */
     document.getElementById("penalty_display1").innerHTML = penalty;
@@ -214,25 +200,23 @@ function update_points()
  */
 function sum_points(var_config)
 {
-    /* sum disk points */
-    var_config.points = 5 * var_config.pyramid +
-                        3 * var_config.high +
-                        2 * var_config.mid +
+    /* sum ball points */
+    var_config.points = 10 * var_config.high +
                         1 * var_config.low;
                 
     /* double points in auton */
-    if (var_config === auto_goals[0] || var_config === auto_goals[1] )
-            var_config.points = 2* var_config.points;
+    if (var_config === auto_goals[0] || var_config === auto_goals[1] && var_config.points > 0)
+            var_config.points = 5 + var_config.points;
 }
 
 // Replaced new_disk_score so that an undo score function could be easily added
-function new_disk_score(period, status, goal)
+function new_ball_score(period, status, goal)
 {
     score_change(period, status, goal, 1);
 }
 
 /* 
- * new_disk_score
+ * new_ball_score
  */
 function score_change(period, status, goal, change)
 {
@@ -273,7 +257,7 @@ function score_change(period, status, goal, change)
 }            
 
 /*
- * Asses a penalty
+ * Assess a penalty
  */
 function new_penalty(type)
 {
@@ -336,23 +320,23 @@ function reset_form()
 {
     document.getElementById("team_number_in").value = "";
     document.getElementById("match_number_in").value = "";
-    document.getElementById("starting_disks").value = 0;
+    document.getElementById("starting_ball").value = 0;
     document.getElementById("floor_pickup").value = 0;
     
     auto_score_stack = new Array();
     document.getElementById("Location").value = "A";
-    auto_goals[0] = new goal_t(0,0,0,0,0);
-    auto_goals[1] = new goal_t(0,0,0,0,0);
-    auto_starting_disks = 0;
-    auto_floor_disks = 0;
+    auto_goals[0] = new goal_t(0,0,0);
+    auto_goals[1] = new goal_t(0,0,0);
+    auto_starting_ball = 0;
+    auto_floor_ball = 0;
     
     tele_score_stack = new Array();
     document.getElementById("Front_shoot").checked = false;
     document.getElementById("Full_shoot").checked = false;
     document.getElementById("Human_load").checked = false;
     document.getElementById("Floor_load").checked = false;
-    tele_goals[0] = new goal_t(0,0,0,0,0);
-    tele_goals[1] = new goal_t(0,0,0,0,0);
+    tele_goals[0] = new goal_t(0,0,0);
+    tele_goals[1] = new goal_t(0,0,0);
     tele_front_court = 0;
     tele_full_court = 0;
     tele_human_loading = 0;    
@@ -368,8 +352,8 @@ function reset_form()
     document.getElementById("disk_block").value = 0;
     document.getElementById("disk_block_time").value = 0;
     end_score_stack = new Array();
-    end_goals[0] = new goal_t(0,0,0,0,0);
-    end_goals[1] = new goal_t(0,0,0,0,0);
+    end_goals[0] = new goal_t(0,0,0);
+    end_goals[1] = new goal_t(0,0,0);
     end_climb_level[0] = 0;
     end_climb_level[1] = 0;
     end_climb_speed = 0;
@@ -401,12 +385,12 @@ function Update_Stuff()
 }
 
 /*
- * Disk scored.
+ * Ball scored.
  */
-function Disk_Score(period, status, goal)
+function Ball_Score(period, status, goal)
 {
-    /* a disk is scored */
-    new_disk_score(period, status, goal);
+    /* a ball is scored */
+    new_ball_score(period, status, goal);
     
     /* update point totals */
     Update_Stuff();                 

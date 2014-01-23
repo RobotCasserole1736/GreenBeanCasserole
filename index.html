@@ -26,9 +26,9 @@
         <h1>Green Bean Casserole: Match Scouting System</h1>
         <ul class='tabs'>
             <li><a href='#MatchData'>Match Info</a></li>
+            <li><a href='#Features'>Features</a></li>
             <li><a href='#AutonomousData'>Autonomous</a></li>
             <li><a href='#TeleopData'>Teleop</a></li>
-            <li><a href='#EndData'>End Game</a></li>
             <li><a href='#PostMatch'>Post Match</a></li>
             <li><a href='#MatchHistory' id="MatchHistoryLink">Match History</a></li>
             <li><a href='#About'>About</a></li>
@@ -51,9 +51,69 @@
                   <option value="Qualification">Qualification</option>
                   <option value="Practice">Practice</option>
                   <option value="Elimination">Elimination</option>
-                  <option value="Other">Other</option>
+                  <option value="Pit">Pit</option>
                 </select>
             </div>
+        </div>
+        
+        <div id="Features">
+        	<!-- ------------------------------ -->
+            <!-- ----------Features------------ -->
+            <!-- ------------------------------ -->
+            <div id="FeatureDataStrings">
+            	Drive Types:<br><br>
+            	Drive Speed:<br><br>
+            	Number of Wheels:<br><br>
+            	Passing:<br><br>
+            	Scoring:<br><br>
+            	Truss Throw:<br><br>
+            	Catching:<br><br>
+            	Defense:<br><br>
+            </div>
+            
+            <div id="FeatureValues">
+            	<select name="drive_type" id="drive_type">
+            		<option value="Standard">Standard</option>
+            		<option value="Swerve">Swerve</option>
+            		<option value="Mecanum">Mecanum</option>
+            		<option value="Omni">Omni</option>
+            		<option value="Other">Other</option>
+            	</select><br>
+            	<select name="drive_speed" id="drive_speed">
+            		<option value="One">One</option>
+            		<option value="Two">Two</option>
+            		<option value="Other">Other</option>
+            	</select><br>
+            	<select name="number_wheels" id="number_wheels">
+            		<option value="Four">Four</option>
+            		<option value="Six">Six</option>
+            		<option value="Eight">Eight</option>
+            		<option value="Other">Other</option>
+            	</select><br>
+            	<select name="passing" id="passing">
+            		<option value="Low Pass">Low Pass</option>
+            		<option value="High Pass">High Pass</option>
+            	</select><br>
+            	<select name="scoring" id="scoring">
+            		<option value="High">High</option>
+            		<option value="Low Front">Low Front</option>
+            		<option value="Low Top">Low Top</option>
+            	</select><br>
+            	<select name="truss_throw" id="truss_throw">
+            		<option value="No Truss Throw">No Truss Capability</option>
+            		<option value="Throw Over">Throw Over</option>
+            	</select><br>
+            	<select name="catching" id="catching">
+            		<option value="Pass Catch">Pass Catch</option>
+            		<option value="Truss Catch">Truss Catch</option>
+            	</select><br>
+            	<select name="defense" id="defense">
+            		<option value="Minimal Defense">Minimal Defense</option>
+            		<option value="Goalie Defense">Goalie Defense</option>
+            		<option value="Robot Defense">Robot Defense</option>
+            	</select>
+            </div>
+            
         </div>
         
         <div id="AutonomousData">
@@ -62,20 +122,18 @@
             <!-- ------------------------------------- -->
 
             <!-- Need to add starting location selector here -->
-            <div id="DiscsAndPoints">
-                Starting Disks: <input name="starting_disks" id="starting_disks" type="number" min="0" max="3" value="0">
+            <div id="BallsAndPoints">
+                Starting Ball: <input type="checkbox" name="starting_ball" id="starting_ball">
                 <br>
-                Floor Pickup: <input name="floor_pickup" id="floor_pickup" type="number" min="0" max="99" value="0">
+                Floor Pickup: <input type="checkbox" name="floor_pickup" id="floor_pickup">
                 <br>
                 Made:
-                    <button onclick="Disk_Score('autonomous', 'make', 'high');">High Goal</button>
-                    <button onclick="Disk_Score('autonomous', 'make', 'mid');">Mid Goal</button>
-                    <button onclick="Disk_Score('autonomous', 'make', 'low');">Low Goal</button>
+                    <button onclick="Ball_Score('autonomous', 'make', 'high');">High Goal</button>
+                    <button onclick="Ball_Score('autonomous', 'make', 'low');">Low Goal</button>
                 <br>
                 Missed:
-                    <button onclick="Disk_Score('autonomous', 'miss', 'high');">High Goal</button>
-                    <button onclick="Disk_Score('autonomous', 'miss', 'mid');">Mid Goal</button>
-                    <button onclick="Disk_Score('autonomous', 'miss', 'low');">Low Goal</button>
+                    <button onclick="Ball_Score('autonomous', 'miss', 'high');">High Goal</button>
+                    <button onclick="Ball_Score('autonomous', 'miss', 'low');">Low Goal</button>
                 <br>
                 Points Scored: <a id="auto_pts_display">0</a>
                 <br>
@@ -205,57 +263,6 @@
             </div>
         </div>
         
-        <div id="EndData">
-            <!-- ------------------------------ -->
-            <!-- ----------End Period---------- -->
-            <!-- ------------------------------ -->
-
-             
-            <div id="EndButtons">
-                Made:
-                <button onclick="Disk_Score('end', 'make', 'pyramid');">Pyramid</button>
-                Missed:
-                <button onclick="Disk_Score('end', 'miss', 'pyramid');">Pyramid</button>
-                <br>
-                Points Scored :  <a id="end_pts_display">0</a>
-                <br>
-                Points Missed :  <a id="end_miss_display">0</a>
-                <br>
-                <button onclick="Undo_Score('end');">Undo</button>
-                <br>
-                <button onclick="Penalty('penalty');">Penalty</button>
-                <button onclick="Penalty('technical');">Technical Foul</button>
-                <br>
-                <a>Penalties :  </a><a id="penalty_display3">0</a>
-                <br>
-                <a>Technical Fouls :  </a><a id="technical_display3">0</a>
-                <br>
-                <button onclick="Undo_Penalty();">Undo Penalty</button>
-            </div>
-            
-            <div id="EndSliders">
-                Climb Level :  
-                <a id="end_climb_display">0</a>
-                <div id="shortslider">
-                   <input class="bar" type="range" id ="climb_level" name="climb_level" min="0" max="30" value ="0" step="10" onchange="Update_Stuff();">
-                   <span class="highlight"></span>
-               </div>
-
-               Climb Level Attempted :  
-               <a id="end_climb_attempt">0</a>
-               <div id="shortslider">
-                   <input class="bar" type="range" id ="climb_attempt" name="climb_attempt" min="0" max="30" value ="0" step="10" onchange="Update_Stuff();">
-                   <span class="highlight"></span>
-               </div>
-               Climb Speed :  
-               <a id="end_climb_speed_display">0</a> seconds
-               <div id="slider">
-                   <input class="bar" type="range" id ="climb_speed" name="climb_speed" min="0" max="120" value ="0" onchange="Update_Stuff();">
-                   <span class="highlight"></span>
-               </div>
-            </div>
-            
-        </div>
 
         <div id="PostMatch">
             <!-- ----------------------------- -->
