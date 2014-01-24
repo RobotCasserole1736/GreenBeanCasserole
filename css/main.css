@@ -92,7 +92,7 @@ textarea {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
-#MatchData, #AutonomousData, #TeleopData, #EndData, #PostMatch {
+#MatchData, #AutonomousData, #TeleopData, #PostMatch {
     break-before: page
 }
 
@@ -358,14 +358,13 @@ li {
     display: inline-block;
 }
 
-#FeatureDataStrings, #FeatureValues, #DiscsAndPoints, #StartLocation, #ShootingData, #TeleopSliders, 
-#MatchDataStrings, #MatchDataValues, #EndButtons, #EndSliders,
-#frm_loading_location, #frm_shooting_location{
+#FeatureDataStrings, #FeatureValues, #BallsAndPoints, #StartLocation, #ShootingData, #TeleopSliders, 
+#MatchDataStrings, #MatchDataValues, #frm_loading_location, #frm_shooting_location{
     display: inline-block;
     vertical-align: top;
 }
 
-#StartLocation, #TeleopSliders, #EndSliders, #frm_loading_location {
+#StartLocation, #TeleopSliders, #frm_loading_location {
     margin-left: 40px;
 }
 
