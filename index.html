@@ -127,14 +127,15 @@
                 <br>
                 Floor Pickup: <input type="checkbox" name="floor_pickup" id="floor_pickup">
                 <br>
-                Moved to Area: <input type="checkbox" name="in_area" id="in_area">
+                Moved to Area: <input onclick="Mobility_Score()"; type="checkbox" name="in_area" id="in_area">
                 <br>
                 Made:
+                	<button onclick="Ball_Score('autonomous','make', 'hot_high');">Hot High Goal</button>
                     <button onclick="Ball_Score('autonomous', 'make', 'high');">High Goal</button>
                     <button onclick="Ball_Score('autonomous', 'make', 'low');">Low Goal</button>
-                    Hot Goal: <input type="checkbox" name="hot_goal" id="hot_goal">
                 <br>
                 Missed:
+                	<button onclick="Ball_Score('autonomous','miss', 'hot_high');">Hot High Goal</button>
                     <button onclick="Ball_Score('autonomous', 'miss', 'high');">High Goal</button>
                     <button onclick="Ball_Score('autonomous', 'miss', 'low');">Low Goal</button>
                 <br>

@@ -13,10 +13,12 @@
 
 
 /* constructor for goals_t objects */
-function goal_t(high, low, points)
+function goal_t(hot_high, high, low, in_area, points)
 {
+	this.hot_high = hot_high;
     this.high = high;
     this.low = low;
+    this.in_area = in_area;
     this.points = points;
 }
 
@@ -30,20 +32,19 @@ function goal_t(high, low, points)
 
 /* autonomous */
     var auto_goals = new Array();
-    auto_goals[0] = new goal_t(0,0,0);
-    auto_goals[1] = new goal_t(0,0,0);
+    auto_goals[0] = new goal_t(0,0,0,0,0);
+    auto_goals[1] = new goal_t(0,0,0,0,0);
 
     var auto_starting_ball = 0;
     var auto_floor_ball = 0;
     var auto_in_area = 0;
-    var auto_hot_goal = 0;
     
     var auto_score_stack = new Array();
 
 /* teleoperated */
     var tele_goals = new Array();
-    tele_goals[0] = new goal_t(0,0,0);
-    tele_goals[1] = new goal_t(0,0,0);
+    tele_goals[0] = new goal_t(0,0,0,0,0);
+    tele_goals[1] = new goal_t(0,0,0,0,0);
     
     var tele_front_court = 0;
     var tele_full_court = 0;
@@ -71,7 +72,6 @@ function update_data()
         auto_starting_ball = document.getElementById('starting_ball').checked;
         auto_floor_ball = document.getElementById('floor_pickup').checked;
         auto_in_area = document.getElementById('in_area').checked;
-        auto_hot_goal = document.getElementById('hot_goal').checked;
     
     /* teleop data */
         tele_front_court = document.frm_shooting_location.shooting_location[0];
@@ -143,8 +143,6 @@ function disp_update()
     document.getElementById("technical_display1").innerHTML = technical;
     document.getElementById("penalty_display2").innerHTML = penalty;
     document.getElementById("technical_display2").innerHTML = technical;
-    document.getElementById("penalty_display3").innerHTML = penalty;
-    document.getElementById("technical_display3").innerHTML = technical;
 }
 
 /*
@@ -168,15 +166,10 @@ function sum_points(var_config)
     /* hot goal in auton */
     if (var_config === auto_goals[0] || var_config === auto_goals[1] )
     {
-    	var_config.points = 15 * var_config.high +
-                        	6 * var_config.low;
-    	if(var_config.high > 0)
-    	{
-    		if(document.getElementById("hot_goal").checked)
-    		{
-    			var_config.points = var_config.points + 5;
-    		}
-    	}
+    	var_config.points = 20 * var_config.hot_high +
+    						15 * var_config.high +
+                        	6 * var_config.low +
+                        	5 * var_config.in_area;
     }
     else
     {
@@ -222,14 +215,6 @@ function score_change(period, status, goal, change)
         tele_goals[status_l][goal]=tele_goals[status_l][goal]+change;
     }
 
-    /* end game */
-    if ( period === 'end')
-    {
-        if(change > 0)
-            end_score_stack.push([status, goal]);
-        end_goals[status_l][goal]=end_goals[status_l][goal]+change;
-    }
-
 }            
 
 /*
@@ -253,8 +238,17 @@ function save_data()
     matchData += document.getElementById("team_number_in").value + ",";
     matchData += document.getElementById("match_number_in").value + ",";
     matchData += document.getElementById("match_type").value + ",";
-    matchData += (document.getElementById("auto_starting_ball").checked ? "T" : "F") + ",";
-    matchData += (document.getElementById("auto_floor_ball").checked ? "T" : "F") + ",";
+    matchData += document.getElementById("drive_type").value + ",";
+    matchData += document.getElementById("drive_speed").value + ",";
+    matchData += document.getElementById("number_wheels").value + ",";
+    matchData += document.getElementById("passing").value + ",";
+    matchData += document.getElementById("scoring").value + ",";
+    matchData += document.getElementById("truss_throw").value + ",";
+    matchData += document.getElementById("catching").value + ",";
+    matchData += document.getElementById("defense").value + ",";
+    matchData += document.getElementById("match_number_in").value + ",";
+    matchData += (document.getElementById("starting_ball").checked ? "T" : "F") + ",";
+    matchData += (document.getElementById("floor_pickup").checked ? "T" : "F") + ",";
     matchData += document.getElementById("auto_pts_display").innerHTML + ",";
     matchData += document.getElementById("auto_miss_display").innerHTML + ",";
     matchData += document.getElementById("Location").value + ",";
@@ -293,8 +287,8 @@ function reset_form()
     
     auto_score_stack = new Array();
     document.getElementById("Location").value = "A";
-    auto_goals[0] = new goal_t(0,0,0);
-    auto_goals[1] = new goal_t(0,0,0);
+    auto_goals[0] = new goal_t(0,0,0,0,0);
+    auto_goals[1] = new goal_t(0,0,0,0,0);
     auto_starting_ball = false;
     auto_floor_ball = false;
     auto_in_area = false;
@@ -305,8 +299,8 @@ function reset_form()
     document.getElementById("Full_shoot").checked = false;
     document.getElementById("Human_load").checked = false;
     document.getElementById("Floor_load").checked = false;
-    tele_goals[0] = new goal_t(0,0,0);
-    tele_goals[1] = new goal_t(0,0,0);
+    tele_goals[0] = new goal_t(0,0,0,0,0);
+    tele_goals[1] = new goal_t(0,0,0,0,0);
     tele_front_court = 0;
     tele_full_court = 0;
     tele_human_loading = 0;    
@@ -315,18 +309,7 @@ function reset_form()
     document.getElementById("driving_ability").value = 0;
     document.getElementById("robot_block").value = 0;
     document.getElementById("robot_block_time").value = 0;
-    document.getElementById("disk_block").value = 0;
-    document.getElementById("disk_block_time").value = 0;
-    end_score_stack = new Array();
-    end_goals[0] = new goal_t(0,0,0);
-    end_goals[1] = new goal_t(0,0,0);
-    end_climb_level[0] = 0;
-    end_climb_level[1] = 0;
-    end_climb_speed = 0;
-    document.getElementById("climb_level").value = 0;
-    document.getElementById("climb_attempt").value = 0;
-    document.getElementById("climb_speed").value = 0;
-    
+   
     penalty_stack = new Array();
     penalty = 0;
     technical = 0;
@@ -362,16 +345,18 @@ function Ball_Score(period, status, goal)
     Update_Stuff();                 
 }
 
-/*
- * Robot Climbed.
- */
-function Robot_Climb()
+function Mobility_Score()
 {
-    /* a robot climbs */
-    //new_robot_climb(period, speed, height);
-    
-    /* update point totals */
-    Update_Stuff();                 
+	Update_Stuff();
+	
+	if(auto_in_area)
+	{
+		Ball_Score('autonomous', 'make', 'in_area');
+	}
+	else
+	{
+		Undo_Score('autonomous');
+	}
 }
             
 /*
