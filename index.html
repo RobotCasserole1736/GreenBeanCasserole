@@ -26,12 +26,13 @@
         <h1>Green Bean Casserole: Match Scouting System</h1>
         <ul class='tabs'>
             <li><a href='#MatchData'>Match Info</a></li>
-            <li><a href='#Features'>Features</a></li>
+            <!-- <li><a href='#Features'>Pit Scouting</a></li> -->
             <li><a href='#AutonomousData'>Autonomous</a></li>
             <li><a href='#TeleopData'>Teleop</a></li>
             <li><a href='#PostMatch'>Post Match</a></li>
             <li><a href='#MatchHistory' id="MatchHistoryLink">Match History</a></li>
             <li><a href='#About'>About</a></li>
+            <li><a href='#Features'>Pit Scouting</a></li>
         </ul>
         <div id="MatchData">
             <!-- ------------------------------ -->
@@ -51,7 +52,6 @@
                   <option value="Qualification">Qualification</option>
                   <option value="Practice">Practice</option>
                   <option value="Elimination">Elimination</option>
-                  <option value="Pit">Pit</option>
                 </select>
             </div>
         </div>
@@ -90,23 +90,20 @@
             		<option value="Eight">Eight</option>
             		<option value="Other">Other</option>
             	</select><br>
-            	<select name="passing" id="passing">
-            		<option value="Low Pass">Low Pass</option>
-            		<option value="High Pass">High Pass</option>
-            	</select><br>
-            	<select name="scoring" id="scoring">
-            		<option value="High">High</option>
-            		<option value="Low Front">Low Front</option>
-            		<option value="Low Top">Low Top</option>
-            	</select><br>
+            	Low Pass: <input type="checkbox" name="low_pass" value="low_pass">
+            	High Pass: <input type="checkbox" name="high_pass" value="high_pass">
+           		<br><br>
+            	High Goal: <input type="checkbox" name="high_goal" value="high_goal">
+            	Low Front: <input type="checkbox" name="low_goal" value="low_goal">
+            	Low Top: <input type="checkbox" name = "low_top" value="low_top">
+            	<br><br>
             	<select name="truss_throw" id="truss_throw">
             		<option value="No Truss Throw">No Truss Capability</option>
             		<option value="Throw Over">Throw Over</option>
             	</select><br>
-            	<select name="catching" id="catching">
-            		<option value="Pass Catch">Pass Catch</option>
-            		<option value="Truss Catch">Truss Catch</option>
-            	</select><br>
+            		Pass: <input type="checkbox" name="pass_catch" value="pass_catch">
+            		Truss: <input type="checkbox" name = "truss_catch" value="truss_catch">
+            		<br><br>
             	<select name="defense" id="defense">
             		<option value="Minimal Defense">Minimal Defense</option>
             		<option value="Goalie Defense">Goalie Defense</option>
@@ -180,9 +177,9 @@
 
             <div id="ShootingData">
                 <form name="frm_shooting_location" id="frm_shooting_location">
-                    Shooting Location:<br>
-                    <input type="checkbox" name="shooting_location" id="Front_shoot">Front Court<br>
-                    <input type="checkbox" name="shooting_location" id="Full_shoot">Full Court<br>
+                    Shooting Range:<br>
+                    <input type="checkbox" name="shooting_location" id="Front_shoot">0-10ft<br>
+                    <input type="checkbox" name="shooting_location" id="Full_shoot">11-24ft<br>
                 </form>
 
                 <form name="frm_loading_location" id="frm_loading_location">
@@ -223,14 +220,14 @@
                     <span class="highlight"></span>
                 </div>
                 
-                <a>On-Robot Defense Effectiveness :  </a>
+                <a>Defense Effectiveness :  </a>
                 <a id="tele_robot_block_display">Awful / None</a>
                 <div id="shortslider">
                     <input class="bar" type="range" id ="robot_block" name="robot_block" min="0" max="3" value ="0" onchange="Update_Stuff();">
                     <span class="highlight"></span>
                 </div>
                 
-                <a>On-Robot Defense Time    :  </a>
+                <a>Defense Time    :  </a>
                 <a id="tele_robot_block_time_display">0</a> seconds
                 <div id="slider">
                     <input class="bar" type="range" id ="robot_block_time" name="robot_block_time" min="0" max="120" value ="0" onchange="Update_Stuff();">
@@ -260,8 +257,10 @@
                 <button onclick="Clear_History();">Confirm</button>
             </div>
         </div>
+        
+        
         <div id="About">
-            This scouting tool was created by FRC Team 1736 Mentors Andrew Gurik and Nick Dunne, with content and design considerations by Tim Delaney.
+            This scouting tool was created by FRC Team 1736 Mentors Andrew Gurik and Nick Dunne and updated to 2014 by student Aaron Thune, with content and design considerations by Tim Delaney.
         </div>
         <script type="text/javascript">
             $('ul.tabs').each(function(){
