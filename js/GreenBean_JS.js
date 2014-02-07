@@ -11,7 +11,7 @@
 
 /* constructor for goals_t objects */
 
-
+window.onload=function(){Update_Stuff();};
 /* constructor for goals_t objects */
 function goal_t(hot_high, high, low, in_area, points)
 {
@@ -54,6 +54,9 @@ function goal_t(hot_high, high, low, in_area, points)
     var tele_driving = 0;
     var tele_robot_block = 0;
     var tele_robot_block_time = 0;
+    var tele_pass_effectiveness_display = 0;
+    var tele_truss_throw_effectiveness_display = 0;
+    var tele_truss_catch_effectiveness = 0;
     
     var tele_score_stack = new Array();
 
@@ -83,7 +86,10 @@ function update_data()
         tele_driving = document.getElementById('driving_ability').value;
         tele_robot_block = document.getElementById('robot_block').value;
         tele_robot_block_time = document.getElementById('robot_block_time').value;
-        
+        tele_pass_effectiveness = document.getElementById('robot_pass_effectiveness').value;
+        tele_truss_throw_effectiveness = document.getElementById('robot_truss_throw_effectiveness').value;
+        tele_truss_catch_effectiveness = document.getElementById('robot_truss_catch_effectiveness').value;
+
     /* update points */
     update_points();
     
@@ -122,6 +128,10 @@ function disp_update()
     }
     
     document.getElementById("tele_robot_block_time_display").innerHTML = tele_robot_block_time;
+    document.getElementById("tele_pass_effectiveness_display").innerHTML = tele_pass_effectiveness + "%";
+    document.getElementById("tele_truss_throw_effectiveness_display").innerHTML = tele_truss_throw_effectiveness + "%";
+    document.getElementById("tele_truss_catch_effectiveness_display").innerHTML = tele_truss_catch_effectiveness + "%";
+    
     switch(tele_robot_block)
     {
         case '0':

@@ -26,7 +26,6 @@
         <h1>Green Bean Casserole: Match Scouting System</h1>
         <ul class='tabs'>
             <li><a href='#MatchData'>Match Info</a></li>
-            <!-- <li><a href='#Features'>Pit Scouting</a></li> -->
             <li><a href='#AutonomousData'>Autonomous</a></li>
             <li><a href='#TeleopData'>Teleop</a></li>
             <li><a href='#PostMatch'>Post Match</a></li>
@@ -231,6 +230,32 @@
                 <a id="tele_robot_block_time_display">0</a> seconds
                 <div id="slider">
                     <input class="bar" type="range" id ="robot_block_time" name="robot_block_time" min="0" max="120" value ="0" onchange="Update_Stuff();">
+                    <span class="highlight"></span>
+                </div>
+                
+                <a># Attempts/Type/Effectiveness    :</a><br>
+                
+                <a id="tele_pass_attempts">0</a>
+                <button>Pass</button>
+                <a id="tele_pass_effectiveness_display">0</a>
+                <div id="shortslider">
+                    <input class="bar" type="range" id ="robot_pass_effectiveness" name="robot_pass_effectiveness" min="0" max="100" value ="0" onchange="Update_Stuff();">
+                    <span class="highlight"></span>
+                </div>
+                
+                <a id="tele_truss_throw_attempts">0</a>
+                <button>Truss Throw</button>
+                <a id="tele_truss_throw_effectiveness_display">0</a>
+                <div id="shortslider">
+                    <input class="bar" type="range" id ="robot_truss_throw_effectiveness" name="robot_truss_throw_effectiveness" min="0" max="100" value ="0" onchange="Update_Stuff();">
+                    <span class="highlight"></span>
+                </div>
+                
+                <a id="tele_truss_catch_attempts">0</a>
+                <button>Truss Catch</button>
+                <a id="tele_truss_catch_effectiveness_display">0</a>
+                <div id="shortslider">
+                    <input class="bar" type="range" id ="robot_truss_catch_effectiveness" name="robot_truss_catch_effectiveness" min="0" max="100" value ="0" onchange="Update_Stuff();">
                     <span class="highlight"></span>
                 </div>
             </div>
