@@ -51,6 +51,15 @@ function goal_t(hot_high, high, low, in_area, points)
     var tele_human_loading = 0;    
     var tele_floor_loading = 0;
     
+    var low_pass = 0;
+    var high_pass = 0;
+    var high_goal = 0;
+    var low_goal = 0;
+    var low_top = 0;
+    
+    var pass_catch = 0;
+    var truss_catch = 0;
+    
     var tele_driving = 0;
     var tele_robot_block = 0;
     var tele_robot_block_time = 0;
@@ -89,6 +98,15 @@ function update_data()
         tele_pass_effectiveness = document.getElementById('robot_pass_effectiveness').value;
         tele_truss_throw_effectiveness = document.getElementById('robot_truss_throw_effectiveness').value;
         tele_truss_catch_effectiveness = document.getElementById('robot_truss_catch_effectiveness').value;
+        
+        low_pass = document.getElementById('low_pass').checked;
+        high_pass = document.getElementById('high_pass').checked;
+		high_goal = document.getElementById('high_goal').checked;
+        low_goal = document.getElementById('low_goal').checked;
+        low_top = document.getElementById('low_top').checked;
+        
+        pass_catch = document.getElementById('pass_catch').checked;
+        truss_catch = document.getElementById('truss_catch').checked;
 
     /* update points */
     update_points();
@@ -248,31 +266,32 @@ function save_data()
     matchData += document.getElementById("team_number_in").value + ",";
     matchData += document.getElementById("match_number_in").value + ",";
     matchData += document.getElementById("match_type").value + ",";
-    matchData += document.getElementById("drive_type").value + ",";
-    matchData += document.getElementById("drive_speed").value + ",";
-    matchData += document.getElementById("number_wheels").value + ",";
-    matchData += document.getElementById("passing").value + ",";
-    matchData += document.getElementById("scoring").value + ",";
-    matchData += document.getElementById("truss_throw").value + ",";
-    matchData += document.getElementById("catching").value + ",";
-    matchData += document.getElementById("defense").value + ",";
-    matchData += document.getElementById("match_number_in").value + ",";
+  // autonomous tab fields 
     matchData += (document.getElementById("starting_ball").checked ? "T" : "F") + ",";
     matchData += (document.getElementById("floor_pickup").checked ? "T" : "F") + ",";
+    matchData += (document.getElementById("in_area").checked ? "T" : "F") + ",";
     matchData += document.getElementById("auto_pts_display").innerHTML + ",";
     matchData += document.getElementById("auto_miss_display").innerHTML + ",";
+    matchData += document.getElementById("penalty_display1").innerHTML + ",";
+    matchData += document.getElementById("technical_display1").innerHTML + ",";
     matchData += document.getElementById("Location").value + ",";
+  // teleop tab fields
     matchData += (document.getElementById("Front_shoot").checked ? "T" : "F") + ",";
     matchData += (document.getElementById("Full_shoot").checked ? "T" : "F") + ",";
     matchData += (document.getElementById("Human_load").checked ? "T" : "F") + ",";
     matchData += (document.getElementById("Floor_load").checked ? "T" : "F") + ",";
     matchData += document.getElementById("tele_pts_display").innerHTML + ",";
     matchData += document.getElementById("tele_miss_display").innerHTML + ",";
-    matchData += tele_driving + ",";
-    matchData += tele_robot_block + ",";
-    matchData += tele_robot_block_time + ",";
-    matchData += penalty + ",";
-    matchData += technical + ",";
+    matchData += document.getElementById("penalty_display2").innerHTML + ",";
+    matchData += document.getElementById("technical_display2").innerHTML + ",";
+    matchData += document.getElementById("driving_ability").value + ",";
+    matchData += document.getElementById("robot_block").value + ",";
+    matchData += document.getElementById("robot_block_time").value + ",";
+    matchData += document.getElementById("robot_pass_effectiveness").value + ",";
+    matchData += document.getElementById("robot_truss_throw_effectiveness").value + ","; 
+    matchData += document.getElementById("robot_truss_catch_effectiveness").value + ",";
+
+ 
     var comments = document.getElementById("Comments").value;
     comments = comments.replace(",","_"); //Get rid of commas so we don't mess up CSV
     comments = comments.replace("\n","   ");
@@ -283,6 +302,40 @@ function save_data()
     else
         localStorage.setItem("MatchData",existingData + matchData);
     document.getElementById("HistoryCSV").value = localStorage.getItem("MatchData");
+}
+
+function save_pit_data()
+{
+    var pitData = document.getElementById("scout_name_in").value + ",";
+    pitData += document.getElementById("team_number_in").value + ",";
+    pitData += document.getElementById("match_number_in").value + ",";
+    pitData += document.getElementById("match_type").value + ",";
+// features tab datasave
+
+    pitData += document.getElementById("drive_type").value + ",";
+    pitData += document.getElementById("drive_speed").value + ",";
+    pitData += document.getElementById("number_wheels").value + ",";
+    pitData += (document.getElementById("low_pass").checked ? "T" : "F") + ","; // chkbox
+    pitData += (document.getElementById("high_pass").checked ? "T" : "F") + ","; // chkbox
+    pitData += (document.getElementById("high_goal").checked ? "T" : "F") + ",";  // chkbox
+    pitData += (document.getElementById("low_goal").checked ? "T" : "F") + ",";  // chkbox
+    pitData += (document.getElementById("low_top").checked ? "T" : "F") + ",";  // chkbox
+    pitData += document.getElementById("truss_throw").value + ",";  
+    pitData += (document.getElementById("pass_catch").checked ? "T" : "F") + ","; // chkbox
+    pitData += (document.getElementById("truss_catch").checked ? "T" : "F") + ",";  // chkbox
+    pitData += document.getElementById("defense").value + ",";  
+  
+    
+    var comments = document.getElementById("Comments").value;
+    comments = comments.replace(",","_"); //Get rid of commas so we don't mess up CSV
+    comments = comments.replace("\n","   ");
+    pitData += comments + "\n";
+    var existingData = localStorage.getItem("MatchData");
+    if(existingData == null)
+        localStorage.setItem("MatchData",pitData);
+    else
+        localStorage.setItem("MatchData",existingData + pitData);
+    document.getElementById("PitHistoryCSV").value = localStorage.getItem("MatchData");
 }
 
 //Clears all data in the form.  
@@ -296,13 +349,13 @@ function reset_form()
     document.getElementById("floor_pickup").value = 0;
     
     auto_score_stack = new Array();
+ 
+    document.getElementById("starting_ball").checked = false;
+    document.getElementById("floor_pickup").checked = false;
+    document.getElementById("in_area").checked = false;
     document.getElementById("Location").value = "A";
     auto_goals[0] = new goal_t(0,0,0,0,0);
     auto_goals[1] = new goal_t(0,0,0,0,0);
-    auto_starting_ball = false;
-    auto_floor_ball = false;
-    auto_in_area = false;
-    auto_hot_goal = false;
     
     tele_score_stack = new Array();
     document.getElementById("Front_shoot").checked = false;
@@ -319,6 +372,9 @@ function reset_form()
     document.getElementById("driving_ability").value = 0;
     document.getElementById("robot_block").value = 0;
     document.getElementById("robot_block_time").value = 0;
+    document.getElementById("robot_pass_effectiveness").value =0;
+    document.getElementById("robot_truss_throw_effectiveness").value =0; 
+    document.getElementById("robot_truss_catch_effectiveness").value =0;
    
     penalty_stack = new Array();
     penalty = 0;
@@ -426,12 +482,19 @@ function Submit_Report()
     reset_form();
 }
 
+function Submit_Pit_Report()
+{
+    save_pit_data();
+    reset_form();
+}
+
 function Clear_History()
 {
     if(document.getElementById("history_password").value == "Beans")
     {
         localStorage.clear();
         document.getElementById("HistoryCSV").value = "";
+        document.getElementById("PitHistoryCSV").value = "";
         $("#HistoryPass").hide(100,null);
     }
     else

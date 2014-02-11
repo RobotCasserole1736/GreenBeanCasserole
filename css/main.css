@@ -183,6 +183,12 @@ textarea {
     margin: 5px;
 }
 
+textarea[class="Pit_Text_Field"] {
+	width: 80%;
+	height: 90px;
+	margin: 5px;
+}
+
 select {
     padding: 0.5em 1em 0.5em 0.75em;
     background: #444;
@@ -359,12 +365,12 @@ li {
 }
 
 #FeatureDataStrings, #FeatureValues, #BallsAndPoints, #StartLocation, #ShootingData, #TeleopSliders, 
-#MatchDataStrings, #MatchDataValues, #frm_loading_location, #frm_shooting_location{
+#MatchDataStrings, #MatchDataValues, #frm_loading_location, #frm_shooting_location, #FeatureComments{
     display: inline-block;
     vertical-align: top;
 }
 
-#StartLocation, #TeleopSliders, #frm_loading_location {
+#StartLocation, #TeleopSliders, #frm_loading_location, #FeatureComments {
     margin-left: 40px;
 }
 
