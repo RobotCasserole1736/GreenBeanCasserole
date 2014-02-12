@@ -8,7 +8,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>Green Bean Casserole | FRC 1736</title>
-        <meta name="description" content="This is the FRC 1736 Scouting Application, for use in the 2013 Ultimate Ascent game">
+        <meta name="description" content="This is the 2014 FRC 1736 Scouting Application, for use in the Aerial Assist game">
         <meta name="vieport" content="width=device-width">
         
         <link rel="stylesheet" href="css/main.css">
@@ -26,12 +26,12 @@
         <h1>Green Bean Casserole: Match Scouting System</h1>
         <ul class='tabs'>
             <li><a href='#MatchData'>Match Info</a></li>
-            <li><a href='#AutonomousData'>Autonomous</a></li>
-            <li><a href='#TeleopData'>Teleop</a></li>
-            <li><a href='#PostMatch'>Post Match</a></li>
+            <li><a href='#Features' id="PitDataButton">Pit Scouting</a></li>
+            <li><a href='#AutonomousData' id="AutonomousDataButton">Autonomous</a></li>
+            <li><a href='#TeleopData' id="TeleOpDataButton">Teleop</a></li>
+            <li><a href='#PostMatch' id="MatchDataButton">Post Match</a></li>
             <li><a href='#MatchHistory' id="MatchHistoryLink">Match History</a></li>
             <li><a href='#About'>About</a></li>
-            <li><a href='#Features'>Pit Scouting</a></li>
         </ul>
         <div id="MatchData">
             <!-- ------------------------------ -->
@@ -47,11 +47,13 @@
                 <input type="text" name="scout_name_in" id="scout_name_in" placeholder="*"><br>
                 <input type="tel" name="team_number_in" id="team_number_in" placeholder="0"><br>
                 <input type="tel" name="match_number_in" id="match_number_in" placeholder="0"><br>
-                <select name="match_type" id="match_type">
+                <select name="match_type" id="match_type" onchange="Hide_Tabs();">
                   <option value="Qualification">Qualification</option>
                   <option value="Practice">Practice</option>
                   <option value="Elimination">Elimination</option>
+                  <option value="PitScouting">Pit Scouting</option>
                 </select>
+                
             </div>
         </div>
         
@@ -307,7 +309,7 @@
         
         
         <div id="About">
-            This scouting tool was created by FRC Team 1736 Mentors Andrew Gurik and Nick Dunne and updated to 2014 by student Aaron Thune, with content and design considerations by Tim Delaney.
+            This scouting tool was created by FRC Team 1736 Mentors Andrew Gurik and Nick Dunne and updated for 2014 by student Aaron Thune, with content and design considerations by Tim Delaney.
         </div>
         <script type="text/javascript">
             $('ul.tabs').each(function(){

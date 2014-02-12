@@ -326,16 +326,35 @@ function save_pit_data()
     pitData += document.getElementById("defense").value + ",";  
   
     
-    var comments = document.getElementById("Comments").value;
+    var comments = document.getElementById("DriveTrain_Comments").value;
     comments = comments.replace(",","_"); //Get rid of commas so we don't mess up CSV
     comments = comments.replace("\n","   ");
     pitData += comments + "\n";
-    var existingData = localStorage.getItem("MatchData");
+
+   var comments = document.getElementById("Shooter_Comments").value;
+    comments = comments.replace(",","_"); //Get rid of commas so we don't mess up CSV
+    comments = comments.replace("\n","   ");
+    pitData += comments + "\n";
+
+   var comments = document.getElementById("General_Comments").value;
+    comments = comments.replace(",","_"); //Get rid of commas so we don't mess up CSV
+    comments = comments.replace("\n","   ");
+    pitData += comments + "\n";
+
+    var existingData = localStorage.getItem("PitData");
     if(existingData == null)
-        localStorage.setItem("MatchData",pitData);
+        localStorage.setItem("PitData",pitData);
     else
-        localStorage.setItem("MatchData",existingData + pitData);
-    document.getElementById("PitHistoryCSV").value = localStorage.getItem("MatchData");
+        localStorage.setItem("PitData",existingData + pitData);
+    document.getElementById("PitHistoryCSV").value = localStorage.getItem("PitData");
+ //////////////////////////////////////////////////////////////////////////   
+//        var existingData = localStorage.getItem("MatchData");
+//    if(existingData == null)
+//        localStorage.setItem("MatchData",matchData);
+//    else
+//        localStorage.setItem("MatchData",existingData + matchData);
+//    document.getElementById("HistoryCSV").value = localStorage.getItem("MatchData");
+
 }
 
 //Clears all data in the form.  
@@ -343,6 +362,12 @@ function save_pit_data()
 //This only resets stuff Nick felt should be reset
 function reset_form()
 {
+		$("#PitDataButton").hide(100,null);
+		$("#AutonomousDataButton").hide(100,null);
+		$("#TeleOpDataButton").hide(100,null);
+		$("#MatchDataButton").hide(100,null);
+
+	
     document.getElementById("team_number_in").value = "";
     document.getElementById("match_number_in").value = "";
     document.getElementById("starting_ball").value = 0;
@@ -381,6 +406,22 @@ function reset_form()
     technical = 0;
     document.getElementById("Comments").value="";
     
+    document.getElementById("drive_type").value = "";
+    document.getElementById("drive_speed").value = "";
+    document.getElementById("number_wheels").value = "";
+    document.getElementById("low_pass").checked = false;
+    document.getElementById("high_pass").checked = false;
+    document.getElementById("high_goal").checked = false;
+    document.getElementById("low_goal").checked = false;
+    document.getElementById("low_top").checked = false;
+    document.getElementById("truss_throw").value = 0;
+    document.getElementById("pass_catch").checked = false;
+    document.getElementById("truss_catch").checked = false;
+    document.getElementById("defense").value = 0;
+
+    document.getElementById("DriveTrain_Comments").value="";
+    document.getElementById("Shooter_Comments").value="";
+    document.getElementById("General_Comments").value="";
     
     update_data();
 }
@@ -502,3 +543,24 @@ function Clear_History()
         document.getElementById("history_password").value = "Incorrect Password";
     }
 }
+
+function Hide_Tabs()
+{
+	if(document.getElementById("match_type").value == "PitScouting")
+	{
+		$("#PitDataButton").show(100,null);
+		$("#AutonomousDataButton").hide(100,null);
+		$("#TeleOpDataButton").hide(100,null);
+		$("#MatchDataButton").hide(100,null);
+	}
+	else
+	{
+		$("#PitDataButton").hide(100,null);
+		$("#AutonomousDataButton").show(100,null);
+		$("#TeleOpDataButton").show(100,null);
+		$("#MatchDataButton").show(100,null);
+	}
+}
+
+
+    
