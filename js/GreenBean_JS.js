@@ -329,16 +329,16 @@ function save_pit_data()
     var comments = document.getElementById("DriveTrain_Comments").value;
     comments = comments.replace(",","_"); //Get rid of commas so we don't mess up CSV
     comments = comments.replace("\n","   ");
-    pitData += comments + "\n";
+    pitData += comments + ",";
 
-   var comments = document.getElementById("Shooter_Comments").value;
-    comments = comments.replace(",","_"); //Get rid of commas so we don't mess up CSV
-    comments = comments.replace("\n","   ");
-    pitData += comments + "\n";
+    comments = document.getElementById("Shooter_Comments").value;
+     comments = comments.replace(",","_"); //Get rid of commas so we don't mess up CSV
+     comments = comments.replace("\n","   ");
+    pitData += comments + ",";
 
-   var comments = document.getElementById("General_Comments").value;
-    comments = comments.replace(",","_"); //Get rid of commas so we don't mess up CSV
-    comments = comments.replace("\n","   ");
+    comments = document.getElementById("General_Comments").value;
+     comments = comments.replace(",","_"); //Get rid of commas so we don't mess up CSV
+     comments = comments.replace("\n","   ");
     pitData += comments + "\n";
 
     var existingData = localStorage.getItem("PitData");
@@ -347,13 +347,6 @@ function save_pit_data()
     else
         localStorage.setItem("PitData",existingData + pitData);
     document.getElementById("PitHistoryCSV").value = localStorage.getItem("PitData");
- //////////////////////////////////////////////////////////////////////////   
-//        var existingData = localStorage.getItem("MatchData");
-//    if(existingData == null)
-//        localStorage.setItem("MatchData",matchData);
-//    else
-//        localStorage.setItem("MatchData",existingData + matchData);
-//    document.getElementById("HistoryCSV").value = localStorage.getItem("MatchData");
 
 }
 
@@ -363,10 +356,11 @@ function save_pit_data()
 function reset_form()
 {
 		$("#PitDataButton").hide(100,null);
-		$("#AutonomousDataButton").hide(100,null);
-		$("#TeleOpDataButton").hide(100,null);
-		$("#MatchDataButton").hide(100,null);
+		$("#AutonomousDataButton").show(100,null);
+		$("#TeleOpDataButton").show(100,null);
+		$("#MatchDataButton").show(100,null);
 
+    document.getElementById("match_type").value = "Qualification";
 	
     document.getElementById("team_number_in").value = "";
     document.getElementById("match_number_in").value = "";
