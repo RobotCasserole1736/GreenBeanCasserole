@@ -13,11 +13,12 @@
 
 window.onload=function(){Update_Stuff();};
 /* constructor for goals_t objects */
-function goal_t(hot_high, high, low, in_area, points)
+function goal_t(hot_high, high, hot_low, low, in_area, points)
 {
 	this.hot_high = hot_high;
     this.high = high;
     this.low = low;
+    this.hot_low = hot_low;
     this.in_area = in_area;
     this.points = points;
 }
@@ -32,8 +33,11 @@ function goal_t(hot_high, high, low, in_area, points)
 
 /* autonomous */
     var auto_goals = new Array();
-    auto_goals[0] = new goal_t(0,0,0,0,0);
-    auto_goals[1] = new goal_t(0,0,0,0,0);
+    auto_goals[0] = new goal_t(0,0,0,0,0,0);
+    auto_goals[1] = new goal_t(0,0,0,0,0,0);
+
+	var tele_attempts_made = [0,0,0];
+	var tele_attempts_miss = [0,0,0];
 
     var auto_starting_ball = 0;
     var auto_floor_ball = 0;
@@ -43,9 +47,9 @@ function goal_t(hot_high, high, low, in_area, points)
 
 /* teleoperated */
     var tele_goals = new Array();
-    tele_goals[0] = new goal_t(0,0,0,0,0);
-    tele_goals[1] = new goal_t(0,0,0,0,0);
-    
+    tele_goals[0] = new goal_t(0,0,0,0,0,0);
+    tele_goals[1] = new goal_t(0,0,0,0,0,0);
+       
     var tele_front_court = 0;
     var tele_full_court = 0;
     var tele_human_loading = 0;    
@@ -63,11 +67,9 @@ function goal_t(hot_high, high, low, in_area, points)
     var tele_driving = 0;
     var tele_robot_block = 0;
     var tele_robot_block_time = 0;
-    var tele_pass_effectiveness_display = 0;
-    var tele_truss_throw_effectiveness_display = 0;
-    var tele_truss_catch_effectiveness = 0;
     
     var tele_score_stack = new Array();
+    var tele_attempts_score_stack = new Array();
 
 /******************************************************************************
  * Internal Functions
@@ -95,9 +97,6 @@ function update_data()
         tele_driving = document.getElementById('driving_ability').value;
         tele_robot_block = document.getElementById('robot_block').value;
         tele_robot_block_time = document.getElementById('robot_block_time').value;
-        tele_pass_effectiveness = document.getElementById('robot_pass_effectiveness').value;
-        tele_truss_throw_effectiveness = document.getElementById('robot_truss_throw_effectiveness').value;
-        tele_truss_catch_effectiveness = document.getElementById('robot_truss_catch_effectiveness').value;
         
         low_pass = document.getElementById('low_pass').checked;
         high_pass = document.getElementById('high_pass').checked;
@@ -127,7 +126,13 @@ function disp_update()
     /* teleop */
     document.getElementById("tele_pts_display").innerHTML = tele_goals[0].points;   /* points made in teleop */
     document.getElementById("tele_miss_display").innerHTML = tele_goals[1].points;  /* points missed in teleop */
-    
+   
+    document.getElementById("pass_made_display").innerHTML = tele_attempts_made[0];
+    document.getElementById("pass_miss_display").innerHTML = tele_attempts_miss[0];
+    document.getElementById("truss_throw_made_display").innerHTML = tele_attempts_made[1];
+    document.getElementById("truss_throw_miss_display").innerHTML = tele_attempts_miss[1];
+    document.getElementById("truss_catch_made_display").innerHTML = tele_attempts_made[2];
+    document.getElementById("truss_catch_miss_display").innerHTML = tele_attempts_miss[2];
     
     switch(tele_driving)
     {
@@ -146,9 +151,6 @@ function disp_update()
     }
     
     document.getElementById("tele_robot_block_time_display").innerHTML = tele_robot_block_time;
-    document.getElementById("tele_pass_effectiveness_display").innerHTML = tele_pass_effectiveness + "%";
-    document.getElementById("tele_truss_throw_effectiveness_display").innerHTML = tele_truss_throw_effectiveness + "%";
-    document.getElementById("tele_truss_catch_effectiveness_display").innerHTML = tele_truss_catch_effectiveness + "%";
     
     switch(tele_robot_block)
     {
@@ -196,6 +198,7 @@ function sum_points(var_config)
     {
     	var_config.points = 20 * var_config.hot_high +
     						15 * var_config.high +
+    						11 * var_config.hot_low +
                         	6 * var_config.low +
                         	5 * var_config.in_area;
     }
@@ -245,6 +248,32 @@ function score_change(period, status, goal, change)
 
 }            
 
+function tele_attempt_change(status, type, change)
+{   
+	change = parseInt(change);
+    if(change > 0)
+    {
+    	tele_attempts_score_stack.push([status, type]);
+    }
+    else if(change < 0)
+    {
+    	var undo_values = tele_attempts_score_stack.pop();
+    	status = undo_values[0];
+    	type = undo_values[1];
+    }
+
+    if(status === "made")
+    {
+    	tele_attempts_made[type] = tele_attempts_made[type] + change;
+    }
+    else if(status === "miss")
+    {
+    	tele_attempts_miss[type] = tele_attempts_miss[type] + change;
+    }
+    
+    Update_Stuff();
+}
+
 /*
  * Assess a penalty
  */
@@ -287,15 +316,21 @@ function save_data()
     matchData += document.getElementById("driving_ability").value + ",";
     matchData += document.getElementById("robot_block").value + ",";
     matchData += document.getElementById("robot_block_time").value + ",";
-    matchData += document.getElementById("robot_pass_effectiveness").value + ",";
-    matchData += document.getElementById("robot_truss_throw_effectiveness").value + ","; 
-    matchData += document.getElementById("robot_truss_catch_effectiveness").value + ",";
+    matchData += tele_attempts_made[0] + ",";
+    matchData += tele_attempts_miss[0] + ",";
+    matchData += tele_attempts_made[1] + ",";
+    matchData += tele_attempts_miss[1] + ",";
+    matchData += tele_attempts_made[2] + ",";
+    matchData += tele_attempts_miss[2] + ",";
+    matchData += (document.getElementById("pos_Inbounder").checked ? "T" : "F") + ",";
+    matchData += (document.getElementById("Pos_MidCourt").checked ? "T" : "F") + ",";
+    matchData += (document.getElementById("Pos_Shooter").checked ? "T" : "F") + ",";
 
  
     var comments = document.getElementById("Comments").value;
     comments = comments.replace(",","_"); //Get rid of commas so we don't mess up CSV
-    comments = comments.replace("\n","   ");
-    matchData += comments + "\n";
+    comments = comments.replace(/(\r\n|\n|\r)/gm,"  ");  // get rid of any newline characters
+    matchData += comments + "\n";  // add a single newline at the end of the data
     var existingData = localStorage.getItem("MatchData");
     if(existingData == null)
         localStorage.setItem("MatchData",matchData);
@@ -328,18 +363,18 @@ function save_pit_data()
     
     var comments = document.getElementById("DriveTrain_Comments").value;
     comments = comments.replace(",","_"); //Get rid of commas so we don't mess up CSV
-    comments = comments.replace("\n","   ");
+    comments = comments.replace(/(\r\n|\n|\r)/gm,"  "); // get rid of any newline characters
     pitData += comments + ",";
 
     comments = document.getElementById("Shooter_Comments").value;
      comments = comments.replace(",","_"); //Get rid of commas so we don't mess up CSV
-     comments = comments.replace("\n","   ");
+     comments = comments.replace(/(\r\n|\n|\r)/gm,"  "); // get rid of any newline characters
     pitData += comments + ",";
 
     comments = document.getElementById("General_Comments").value;
      comments = comments.replace(",","_"); //Get rid of commas so we don't mess up CSV
-     comments = comments.replace("\n","   ");
-    pitData += comments + "\n";
+     comments = comments.replace(/(\r\n|\n|\r)/gm,"  "); // get rid of any newline characters
+    pitData += comments + "\n";  // add a single newline at the end of the data
 
     var existingData = localStorage.getItem("PitData");
     if(existingData == null)
@@ -355,12 +390,7 @@ function save_pit_data()
 //This only resets stuff Nick felt should be reset
 function reset_form()
 {
-		$("#PitDataButton").hide(100,null);
-		$("#AutonomousDataButton").show(100,null);
-		$("#TeleOpDataButton").show(100,null);
-		$("#MatchDataButton").show(100,null);
-
-    document.getElementById("match_type").value = "Qualification";
+   //document.getElementById("match_type").value = "Qualification";
 	
     document.getElementById("team_number_in").value = "";
     document.getElementById("match_number_in").value = "";
@@ -368,6 +398,7 @@ function reset_form()
     document.getElementById("floor_pickup").value = 0;
     
     auto_score_stack = new Array();
+    tele_attempt_stack = new Array();
  
     document.getElementById("starting_ball").checked = false;
     document.getElementById("floor_pickup").checked = false;
@@ -383,6 +414,8 @@ function reset_form()
     document.getElementById("Floor_load").checked = false;
     tele_goals[0] = new goal_t(0,0,0,0,0);
     tele_goals[1] = new goal_t(0,0,0,0,0);
+    tele_attempts_made = [0,0,0];
+	tele_attempts_miss = [0,0,0];
     tele_front_court = 0;
     tele_full_court = 0;
     tele_human_loading = 0;    
@@ -391,9 +424,10 @@ function reset_form()
     document.getElementById("driving_ability").value = 0;
     document.getElementById("robot_block").value = 0;
     document.getElementById("robot_block_time").value = 0;
-    document.getElementById("robot_pass_effectiveness").value =0;
-    document.getElementById("robot_truss_throw_effectiveness").value =0; 
-    document.getElementById("robot_truss_catch_effectiveness").value =0;
+    document.getElementById("pos_Inbounder").checked = false;
+    document.getElementById("Pos_MidCourt").checked = false;
+    document.getElementById("Pos_Shooter").checked = false;
+
    
     penalty_stack = new Array();
     penalty = 0;
@@ -514,12 +548,24 @@ function Undo_Penalty()
 function Submit_Report()
 {
     save_data();
+
+	$("#PitDataButton").hide(100,null);
+	$("#AutonomousDataButton").show(100,null);
+	$("#TeleOpDataButton").show(100,null);
+	$("#MatchDataButton").show(100,null);
+
     reset_form();
 }
 
 function Submit_Pit_Report()
 {
     save_pit_data();
+    
+	$("#PitDataButton").show(100,null);
+	$("#AutonomousDataButton").hide(100,null);
+	$("#TeleOpDataButton").hide(100,null);
+	$("#MatchDataButton").hide(100,null);
+    
     reset_form();
 }
 

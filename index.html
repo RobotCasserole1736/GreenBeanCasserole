@@ -106,10 +106,10 @@
             		Truss: <input type="checkbox" name = "truss_catch" id="truss_catch">
             		<br><br>
             	<select name="defense" id="defense">
-            		<option value="Minimal Defense">Minimal Defense</option>
-            		<option value="Goalie Defense">Goalie Defense</option>
+            		<option value="Field Blocking">Field Blocking</option>
+            		<option value="Goalie Blocking">Goalie Blocking</option>
             		<option value="Robot Defense">Robot Defense</option>
-            	</select><br>
+            	</select><br><br>
    	           <button id="SubmitPitReport" onclick="Submit_Pit_Report()">Submit Pit Report</button>
  
             </div>
@@ -133,7 +133,7 @@
 
             <!-- Need to add starting location selector here -->
             <div id="BallsAndPoints">
-                Starting Ball: <input type="checkbox" name="starting_ball" id="starting_ball">
+                Starts with Ball: <input type="checkbox" name="starting_ball" id="starting_ball">
                 <br>
                 Floor Pickup: <input type="checkbox" name="floor_pickup" id="floor_pickup">
                 <br>
@@ -142,11 +142,13 @@
                 Made:
                 	<button onclick="Ball_Score('autonomous','make', 'hot_high');">Hot High Goal</button>
                     <button onclick="Ball_Score('autonomous', 'make', 'high');">High Goal</button>
+                    <button onclick="Ball_Score('autonomous', 'make', 'hot_low');">Hot Low Goal</button>
                     <button onclick="Ball_Score('autonomous', 'make', 'low');">Low Goal</button>
                 <br>
                 Missed:
                 	<button onclick="Ball_Score('autonomous','miss', 'hot_high');">Hot High Goal</button>
                     <button onclick="Ball_Score('autonomous', 'miss', 'high');">High Goal</button>
+                    <button onclick="Ball_Score('autonomous', 'miss', 'hot_low');">Hot Low Goal</button>
                     <button onclick="Ball_Score('autonomous', 'miss', 'low');">Low Goal</button>
                 <br>
                 Points Scored: <a id="auto_pts_display">0</a>
@@ -224,9 +226,37 @@
                 <a>Technical Fouls :  </a><a id="technical_display2">0</a>
                 <br>
                 <button onclick="Undo_Penalty();">Undo Penalty</button>
+                <br>
+                Playing Position: <br>
+               	Inbounder: <input type="checkbox" name="pos_Inbounder" id="pos_Inbounder">
+            	MidCourt: <input type="checkbox" name="pos_MidCourt" id="Pos_MidCourt">
+            	Shooter: <input type="checkbox" name = "pos_Shooter" id="Pos_Shooter">
+
             </div>
             
             <div id="TeleopSliders">
+            	<a>Passing: </a><br>
+            	<a>Made: </a><a id="pass_made_display">0</a>
+            	<a>   /   </a>
+            	<a>Missed: </a><a id="pass_miss_display">0</a><br>
+            	<button onclick="tele_attempt_change('made', '0', '1');">Made</button>
+            	<button onclick="tele_attempt_change('miss', '0', '1');">Miss</button>
+            	<br>
+            	<a>Truss Throwing: </a><br>
+            	<a>Made: </a><a id="truss_throw_made_display">0</a>
+            	<a>   /   </a>
+            	<a>Missed: </a><a id="truss_throw_miss_display">0</a><br>
+            	<button onclick="tele_attempt_change('made', '1', '1');">Made</button>
+            	<button onclick="tele_attempt_change('miss', '1', '1');">Miss</button>
+            	<button id="undoAttempt" onclick="tele_attempt_change('null', 'null', '-1');">Undo Attempt</button>
+            	<br>
+            	<a>Truss Catching: </a><br>
+            	<a>Made: </a><a id="truss_catch_made_display">0</a>
+            	<a>   /   </a>
+            	<a>Missed: </a><a id="truss_catch_miss_display">0</a><br>
+            	<button onclick="tele_attempt_change('made', '2', '1');">Made</button>
+            	<button onclick="tele_attempt_change('miss', '2', '1');">Miss</button>
+            	<br>
                 <a>How's My Driving? :  </a>
                 <a id="tele_driving_display">Little or No Movement</a>
                 <div id="shortslider">
@@ -245,35 +275,6 @@
                 <a id="tele_robot_block_time_display">0</a> seconds
                 <div id="slider">
                     <input class="bar" type="range" id ="robot_block_time" name="robot_block_time" min="0" max="120" value ="0" onchange="Update_Stuff();">
-                    <span class="highlight"></span>
-                </div>
-                
-                <a># Attempts/Type/Effectiveness    :</a><br>
-                
-                <a id="tele_pass_attempts">0</a>
-                
-                <button>Pass</button>
-                <a id="tele_pass_effectiveness_display">0</a>
-                <div id="shortslider">
-                    <input class="bar" type="range" id ="robot_pass_effectiveness" name="robot_pass_effectiveness" min="0" max="100" value ="0" onchange="Update_Stuff();">
-                    <span class="highlight"></span>
-                </div>
-                
-                <a id="tele_truss_throw_attempts">0</a>
-                
-                <button>Truss Throw</button>
-                <a id="tele_truss_throw_effectiveness_display">0</a>
-                <div id="shortslider">
-                    <input class="bar" type="range" id ="robot_truss_throw_effectiveness" name="robot_truss_throw_effectiveness" min="0" max="100" value ="0" onchange="Update_Stuff();">
-                    <span class="highlight"></span>
-                </div>
-                
-                <a id="tele_truss_catch_attempts">0</a>
-                
-                <button>Truss Catch</button>
-                <a id="tele_truss_catch_effectiveness_display">0</a>
-                <div id="shortslider">
-                    <input class="bar" type="range" id ="robot_truss_catch_effectiveness" name="robot_truss_catch_effectiveness" min="0" max="100" value ="0" onchange="Update_Stuff();">
                     <span class="highlight"></span>
                 </div>
             </div>
@@ -309,7 +310,7 @@
         
         
         <div id="About">
-            This scouting tool was created by FRC Team 1736 Mentors Andrew Gurik and Nick Dunne and updated for 2014 by student Aaron Thune, with content and design considerations by Tim Delaney.
+            This scouting tool was created by FRC Team 1736 Mentors Andrew Gurik and Nick Dunne and updated for 2014 by student Aaron Thune and mentor Dan Thune, with content and design considerations by Tim Delaney.
         </div>
         <script type="text/javascript">
             $('ul.tabs').each(function(){
