@@ -11,7 +11,7 @@
 
 /* constructor for goals_t objects */
 
-window.onload=function(){Update_Stuff();};
+window.onload=function(){Update_Stuff(); Hide_Tabs();};
 /* constructor for goals_t objects */
 function goal_t(hot_high, high, hot_low, low, in_area, points)
 {

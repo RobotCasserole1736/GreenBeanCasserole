@@ -351,6 +351,8 @@
             document.getElementById("MatchHistoryLink").onclick = function (){
                 var existingData = localStorage.getItem("MatchData");
                 document.getElementById("HistoryCSV").value = existingData == null ? "" : existingData;
+                var existingPitData = localStorage.getItem("PitData");
+                document.getElementById("PitHistoryCSV").value = existingPitData == null ? "" : existingPitData;
             };
         </script>
     </body>

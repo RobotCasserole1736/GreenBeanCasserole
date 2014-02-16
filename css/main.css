@@ -365,7 +365,7 @@ li {
 }
 
 #FeatureDataStrings, #FeatureValues, #BallsAndPoints, #StartLocation, #ShootingData, #TeleopSliders, 
-#MatchDataStrings, #MatchDataValues, #frm_loading_location, #frm_shooting_location, #FeatureComments{
+#MatchDataStrings, #MatchDataValues, #frm_loading_location, #frm_shooting_location, #FeatureComments {
     display: inline-block;
     vertical-align: top;
 }
@@ -380,6 +380,10 @@ li {
 
 #About {
     width: 750px;
+}
+
+#undoAttempt {
+	margin-left: 3em;
 }
 
 
