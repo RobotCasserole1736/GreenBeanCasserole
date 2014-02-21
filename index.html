@@ -23,7 +23,7 @@
         
     </head>
     <body>        
-        <h1>Green Bean Casserole: Match Scouting System</h1>
+       <h1>Green Bean Casserole: Match Scouting System</h1>
         <ul class='tabs'>
             <li><a href='#MatchData'>Match Info</a></li>
             <li><a href='#Features' id="PitDataButton">Pit Scouting</a></li>
@@ -264,14 +264,14 @@
                     <span class="highlight"></span>
                 </div>
                 
-                <a>Defense Effectiveness :  </a>
-                <a id="tele_robot_block_display">Awful / None</a>
+                <a>Defense :  </a>
+                <a id="tele_robot_block_display">Trash/Nah</a>
                 <div id="shortslider">
                     <input class="bar" type="range" id ="robot_block" name="robot_block" min="0" max="3" value ="0" onchange="Update_Stuff();">
                     <span class="highlight"></span>
                 </div>
                 
-                <a>Defense Time    :  </a>
+                <a>Defense Time   :  </a>
                 <a id="tele_robot_block_time_display">0</a> seconds
                 <div id="slider">
                     <input class="bar" type="range" id ="robot_block_time" name="robot_block_time" min="0" max="120" value ="0" onchange="Update_Stuff();">
@@ -296,13 +296,13 @@
         	<br>
             <textarea id="HistoryCSV"></textarea>
             <br><br>
-            Pit Scout:
+          	Pit Scout:
             <br>
             <textarea id="PitHistoryCSV"></textarea>
             <br><br>
             <button onclick="$('#HistoryPass').show(100,null);">Clear History</button>
             <div id="HistoryPass">
-                Enter Password to Clear: <input type="text" id="history_password" placeholder="Password">
+               Enter Password to Clear<input type="text" id="history_password" placeholder="Password">
                 <br>
                 <button onclick="Clear_History();">Confirm</button>
             </div>
