@@ -218,6 +218,11 @@
                 <br>
                 <button onclick="Undo_Score('teleop');">Undo</button>
                 <br>
+                
+              	Dead Ball: <input type="checkbox" name="deadball" id="deadball">
+              	Broke Down: <input type="checkbox" name="brokedown" id="brokedown">
+
+				<br>
                 <button onclick="Penalty('penalty');">Penalty</button>
                 <button onclick="Penalty('technical');">Technical Foul</button>
                 <br>
@@ -285,6 +290,14 @@
             <!-- ----------------------------- -->
             <!-- ----------Post Match--------- -->
             <!-- ----------------------------- -->
+                        	<br>
+                <a>Overall Rating :  </a>
+                <a id="post_overallrating">Do Not Pick</a>
+                <div id="shortslider">
+                    <input class="bar" type="range" id ="Overall_Rating" name="Overall_Rating" min="0" max="3" value ="0" onchange="Update_Stuff();">
+                    <span class="highlight"></span>
+                </div>
+
             
             <textarea placeholder="Comments" id="Comments"></textarea>
             <br>

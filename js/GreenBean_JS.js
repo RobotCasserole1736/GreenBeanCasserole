@@ -67,6 +67,7 @@ function goal_t(hot_high, high, hot_low, low, in_area, points)
     var tele_driving = 0;
     var tele_robot_block = 0;
     var tele_robot_block_time = 0;
+    var post_overallrating = 0;
     
     var tele_score_stack = new Array();
     var tele_attempts_score_stack = new Array();
@@ -106,6 +107,8 @@ function update_data()
         
         pass_catch = document.getElementById('pass_catch').checked;
         truss_catch = document.getElementById('truss_catch').checked;
+
+        post_overallrating = document.getElementById('Overall_Rating').value;
 
     /* update points */
     update_points();
@@ -173,6 +176,25 @@ function disp_update()
     document.getElementById("technical_display1").innerHTML = technical;
     document.getElementById("penalty_display2").innerHTML = penalty;
     document.getElementById("technical_display2").innerHTML = technical;
+
+    switch(post_overallrating)
+    {
+        case '0':
+            document.getElementById("post_overallrating").innerHTML = "Do Not Pick";
+            break;
+        case '1':
+            document.getElementById("post_overallrating").innerHTML = "Below Average";
+            break;
+        case '2':
+            document.getElementById("post_overallrating").innerHTML = "Above Average";
+            break;
+        case '3':
+            document.getElementById("post_overallrating").innerHTML = "Top Team";
+            break;
+    }
+
+
+
 }
 
 /*
@@ -325,8 +347,11 @@ function save_data()
     matchData += (document.getElementById("pos_Inbounder").checked ? "T" : "F") + ",";
     matchData += (document.getElementById("Pos_MidCourt").checked ? "T" : "F") + ",";
     matchData += (document.getElementById("Pos_Shooter").checked ? "T" : "F") + ",";
+    matchData += (document.getElementById("deadball").checked ? "T" : "F") + ",";
+    matchData += (document.getElementById("brokedown").checked ? "T" : "F") + ",";
+    matchData += document.getElementById("Overall_Rating").value + ",";
 
- 
+
     var comments = document.getElementById("Comments").value;
     comments = comments.replace(",","_"); //Get rid of commas so we don't mess up CSV
     comments = comments.replace(/(\r\n|\n|\r)/gm,"  ");  // get rid of any newline characters
@@ -427,6 +452,9 @@ function reset_form()
     document.getElementById("pos_Inbounder").checked = false;
     document.getElementById("Pos_MidCourt").checked = false;
     document.getElementById("Pos_Shooter").checked = false;
+    document.getElementById('Overall_Rating').value = 0;
+    document.getElementById("deadball").checked = false;
+    document.getElementById("deadball").checked = false;
 
    
     penalty_stack = new Array();
