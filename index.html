@@ -313,6 +313,10 @@
             <br>
             <textarea id="PitHistoryCSV"></textarea>
             <br><br>
+            Shared Data:
+            <br>
+            <textarea id="SharedDataCSV"></textarea>
+            <br><br>
             <button onclick="$('#HistoryPass').show(100,null);">Clear History</button>
             <div id="HistoryPass">
                Enter Password to Clear<input type="text" id="history_password" placeholder="Password">
@@ -366,6 +370,8 @@
                 document.getElementById("HistoryCSV").value = existingData == null ? "" : existingData;
                 var existingPitData = localStorage.getItem("PitData");
                 document.getElementById("PitHistoryCSV").value = existingPitData == null ? "" : existingPitData;
+                var existingSharedData = localStorage.getItem("SharedData");
+                document.getElementById("SharedDataCSV").value = existingSharedData == null ? "" : existingSharedData;
             };
         </script>
     </body>

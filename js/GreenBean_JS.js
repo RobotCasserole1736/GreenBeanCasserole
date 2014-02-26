@@ -350,6 +350,43 @@ function save_data()
     matchData += (document.getElementById("deadball").checked ? "T" : "F") + ",";
     matchData += (document.getElementById("brokedown").checked ? "T" : "F") + ",";
     matchData += document.getElementById("Overall_Rating").value + ",";
+    
+    var sharedData = document.getElementById("scout_name_in").value + ",";
+    sharedData += document.getElementById("team_number_in").value + ",";
+    sharedData += document.getElementById("match_number_in").value + ",";
+    sharedData += document.getElementById("match_type").value + ",";
+  // autonomous tab fields 
+    sharedData += (document.getElementById("starting_ball").checked ? "T" : "F") + ",";
+    sharedData += (document.getElementById("floor_pickup").checked ? "T" : "F") + ",";
+    sharedData += (document.getElementById("in_area").checked ? "T" : "F") + ",";
+    sharedData += document.getElementById("auto_pts_display").innerHTML + ",";
+    sharedData += document.getElementById("auto_miss_display").innerHTML + ",";
+    sharedData += document.getElementById("penalty_display1").innerHTML + ",";
+    sharedData += document.getElementById("technical_display1").innerHTML + ",";
+    sharedData += document.getElementById("Location").value + ",";
+  // teleop tab fields
+    sharedData += (document.getElementById("Front_shoot").checked ? "T" : "F") + ",";
+    sharedData += (document.getElementById("Full_shoot").checked ? "T" : "F") + ",";
+    sharedData += (document.getElementById("Human_load").checked ? "T" : "F") + ",";
+    sharedData += (document.getElementById("Floor_load").checked ? "T" : "F") + ",";
+    sharedData += document.getElementById("tele_pts_display").innerHTML + ",";
+    sharedData += document.getElementById("tele_miss_display").innerHTML + ",";
+    sharedData += document.getElementById("penalty_display2").innerHTML + ",";
+    sharedData += document.getElementById("technical_display2").innerHTML + ",";
+    sharedData += document.getElementById("driving_ability").value + ",";
+    sharedData += document.getElementById("robot_block").value + ",";
+    sharedData += document.getElementById("robot_block_time").value + ",";
+    sharedData += tele_attempts_made[0] + ",";
+    sharedData += tele_attempts_miss[0] + ",";
+    sharedData += tele_attempts_made[1] + ",";
+    sharedData += tele_attempts_miss[1] + ",";
+    sharedData += tele_attempts_made[2] + ",";
+    sharedData += tele_attempts_miss[2] + ",";
+    sharedData += (document.getElementById("pos_Inbounder").checked ? "T" : "F") + ",";
+    sharedData += (document.getElementById("Pos_MidCourt").checked ? "T" : "F") + ",";
+    sharedData += (document.getElementById("Pos_Shooter").checked ? "T" : "F") + ",";
+    sharedData += (document.getElementById("deadball").checked ? "T" : "F") + ",";
+    sharedData += (document.getElementById("brokedown").checked ? "T" : "F") + "\n";
 
 
     var comments = document.getElementById("Comments").value;
@@ -362,6 +399,13 @@ function save_data()
     else
         localStorage.setItem("MatchData",existingData + matchData);
     document.getElementById("HistoryCSV").value = localStorage.getItem("MatchData");
+    
+    var existingSharedData = localStorage.getItem("SharedData");
+    if(existingSharedData == null)
+        localStorage.setItem("SharedData",sharedData);
+    else
+        localStorage.setItem("SharedData",existingSharedData + sharedData);
+    document.getElementById("SharedDataCSV").value = localStorage.getItem("SharedData");
 }
 
 function save_pit_data()
@@ -604,6 +648,7 @@ function Clear_History()
         localStorage.clear();
         document.getElementById("HistoryCSV").value = "";
         document.getElementById("PitHistoryCSV").value = "";
+        document.getElementById("SharedDataCSV").value = "";
         $("#HistoryPass").hide(100,null);
     }
     else
