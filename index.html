@@ -24,6 +24,12 @@
     </head>
     <body>        
        <h1>Green Bean Casserole: Match Scouting System</h1>
+        <div id="teamLabel">
+	       Team Number<br>
+        </div>
+        <div id="teamDisp">
+       		<input type="tel" name="team_number_in" id="team_number_in" placeholder="0" onchange="disp_update();"><br>
+       	</div>
         <ul class='tabs'>
             <li><a href='#MatchData'>Match Info</a></li>
             <li><a href='#Features' id="PitDataButton">Pit Scouting</a></li>
@@ -39,13 +45,11 @@
             <!-- ------------------------------ -->
             <div id="MatchDataStrings">
                 Scout Name<br>
-                Team Number<br>
                 Match Number<br>
                 Match Type
             </div>
             <div id="MatchDataValues">
                 <input type="text" name="scout_name_in" id="scout_name_in" placeholder="*"><br>
-                <input type="tel" name="team_number_in" id="team_number_in" placeholder="0"><br>
                 <input type="tel" name="match_number_in" id="match_number_in" placeholder="0"><br>
                 <select name="match_type" id="match_type" onchange="Hide_Tabs();">
                   <option value="Qualification">Qualification</option>
@@ -133,11 +137,9 @@
 
             <!-- Need to add starting location selector here -->
             <div id="BallsAndPoints">
-                Starts with Ball: <input type="checkbox" name="starting_ball" id="starting_ball">
-                <br>
-                Floor Pickup: <input type="checkbox" name="floor_pickup" id="floor_pickup">
-                <br>
-                Moved to Area: <input onclick="Mobility_Score()"; type="checkbox" name="in_area" id="in_area">
+                Starts with Ball: <input type="checkbox" name="starting_ball" id="starting_ball">       
+                Floor Pickup: <input type="checkbox" name="floor_pickup" id="floor_pickup">   
+                Moved to Area: <input onclick="Mobility_Score()"; type="checkbox" name="in_area" id="in_area"> <br>  
                 <br>
                 Made:
                 	<button onclick="Ball_Score('autonomous','make', 'hot_high');">Hot High Goal</button>
@@ -190,8 +192,15 @@
             <!-- --------------------------------------- -->
             <!-- ----------Teleoperated Period---------- -->
             <!-- --------------------------------------- -->
-
+ 
             <div id="ShootingData">
+            	<form name="position" id="position">
+            		Position:<br>
+            		Inbounder: <input type="checkbox" name="pos_Inbounder" id="pos_Inbounder">
+            		MidCourt: <input type="checkbox" name="pos_MidCourt" id="Pos_MidCourt">
+            		Shooter: <input type="checkbox" name = "pos_Shooter" id="Pos_Shooter">
+            	</form>
+            	<br><br>
                 <form name="frm_shooting_location" id="frm_shooting_location">
                     Shooting Range:<br>
                     <input type="checkbox" name="shooting_location" id="Front_shoot">0-10ft<br>
@@ -222,7 +231,7 @@
               	Dead Ball: <input type="checkbox" name="deadball" id="deadball">
               	Broke Down: <input type="checkbox" name="brokedown" id="brokedown">
 
-				<br>
+				<br><br>
                 <button onclick="Penalty('penalty');">Penalty</button>
                 <button onclick="Penalty('technical');">Technical Foul</button>
                 <br>
@@ -232,10 +241,6 @@
                 <br>
                 <button onclick="Undo_Penalty();">Undo Penalty</button>
                 <br>
-                Playing Position: <br>
-               	Inbounder: <input type="checkbox" name="pos_Inbounder" id="pos_Inbounder">
-            	MidCourt: <input type="checkbox" name="pos_MidCourt" id="Pos_MidCourt">
-            	Shooter: <input type="checkbox" name = "pos_Shooter" id="Pos_Shooter">
 
             </div>
             
@@ -328,6 +333,8 @@
         
         <div id="About">
             This scouting tool was created by FRC Team 1736 Mentors Andrew Gurik and Nick Dunne and updated for 2014 by student Aaron Thune and mentor Dan Thune, with content and design considerations by Tim Delaney.
+            <br><br>
+            Picture credits to Zach Yarnot.
         </div>
         <script type="text/javascript">
             $('ul.tabs').each(function(){

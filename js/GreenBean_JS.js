@@ -122,7 +122,7 @@ function update_data()
  */
 function disp_update()
 {
-    /* autonomous */
+     /* autonomous */
     document.getElementById("auto_pts_display").innerHTML = auto_goals[0].points;   /* points made in auton */
     document.getElementById("auto_miss_display").innerHTML = auto_goals[1].points;  /* points missed in auton */
     
@@ -186,7 +186,7 @@ function disp_update()
             document.getElementById("post_overallrating").innerHTML = "Below Average";
             break;
         case '2':
-            document.getElementById("post_overallrating").innerHTML = "Above Average";
+            document.getElementById("post_overallrating").innerHTML = "Average";
             break;
         case '3':
             document.getElementById("post_overallrating").innerHTML = "Top Team";
@@ -406,6 +406,9 @@ function save_data()
     else
         localStorage.setItem("SharedData",existingSharedData + sharedData);
     document.getElementById("SharedDataCSV").value = localStorage.getItem("SharedData");
+    
+
+     
 }
 
 function save_pit_data()
@@ -462,7 +465,7 @@ function reset_form()
    //document.getElementById("match_type").value = "Qualification";
 	
     document.getElementById("team_number_in").value = "";
-    document.getElementById("match_number_in").value = "";
+    document.getElementById("match_number_in").value = parseInt(document.getElementById("match_number_in").value) + 1;
     document.getElementById("starting_ball").value = 0;
     document.getElementById("floor_pickup").value = 0;
     
@@ -498,8 +501,7 @@ function reset_form()
     document.getElementById("Pos_Shooter").checked = false;
     document.getElementById('Overall_Rating').value = 0;
     document.getElementById("deadball").checked = false;
-    document.getElementById("deadball").checked = false;
-
+    document.getElementById("brokedown").checked = false;
    
     penalty_stack = new Array();
     penalty = 0;

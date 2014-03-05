@@ -364,13 +364,13 @@ li {
     display: inline-block;
 }
 
-#FeatureDataStrings, #FeatureValues, #BallsAndPoints, #StartLocation, #ShootingData, #TeleopSliders, 
-#MatchDataStrings, #MatchDataValues, #frm_loading_location, #frm_shooting_location, #FeatureComments {
+#FeatureDataStrings, #FeatureValues, #BallsAndPoints, #StartLocation, #ShootingData, #TeleopSliders, #position, #BallsAndPoints,#TeleScoring,
+#MatchDataStrings, #MatchDataValues, #frm_loading_location, #frm_shooting_location, #FeatureComments, #teamLabel, #teamDisp {
     display: inline-block;
-    vertical-align: top;
+    vertical-align: middle;
 }
 
-#StartLocation, #TeleopSliders, #frm_loading_location, #FeatureComments {
+#StartLocation, #TeleopSliders, #TeleScoring, #frm_loading_location, #FeatureComments {
     margin-left: 40px;
 }
 
