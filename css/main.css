@@ -184,7 +184,7 @@ textarea {
 }
 
 textarea[class="Pit_Text_Field"] {
-	width: 80%;
+	width: 90%;
 	height: 90px;
 	margin: 5px;
 }
@@ -383,6 +383,9 @@ li {
     margin-left: 20px;
 }
 
+#FeatureComments {
+	width: 50%
+}
 
 #MatchDataStrings {
     line-height: 2.4em; 
