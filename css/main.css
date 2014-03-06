@@ -365,7 +365,7 @@ li {
 }
 
 #FeatureDataStrings, #FeatureValues, #BallsAndPoints, #StartLocation, #ShootingData,  #position, #BallsAndPoints,#TeleScoring,
-#MatchDataStrings, #MatchDataValues, #frm_loading_location, #frm_shooting_location, #FeatureComments, #teamLabel, #teamDisp,
+#MatchDataStrings, #MatchDataValues, #frm_loading_location, #frm_shooting_location, #FeatureComments, #teamDisp,
 #Possession, #ShootingData,#Truss, #general, #TeleopSliders, #teamDisp, #undoAutoScore, #autoPoints {
     display: inline-block;
     vertical-align: top;

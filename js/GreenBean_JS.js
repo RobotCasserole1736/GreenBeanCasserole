@@ -82,8 +82,8 @@ function goal_t(hot_high, high, hot_low, low, in_area, points)
  * Update Scoring Data
  */
 function update_data()
-{ 
-	   /* autonomous data */
+{
+   /* autonomous data */
         auto_starting_ball = document.getElementById('starting_ball').checked;
         auto_floor_ball = document.getElementById('floor_pickup').checked;
         auto_in_area = document.getElementById('in_area').checked;
@@ -92,8 +92,8 @@ function update_data()
         tele_front_court = document.frm_shooting_location.shooting_location[0];
         tele_full_court = document.frm_shooting_location.shooting_location[1];
 
-        tele_human_loading = document.frm_loading_location.loading_location[0];
-        tele_floor_loading = document.frm_loading_location.loading_location[1];
+        //tele_human_loading = document.frm_loading_location.loading_location[0];
+        //tele_floor_loading = document.frm_loading_location.loading_location[1];
         
         tele_driving = document.getElementById('driving_ability').value;
         tele_robot_block = document.getElementById('robot_block').value;
@@ -122,6 +122,8 @@ function update_data()
  */
 function disp_update()
 {
+	document.getElementById('teamDisp').innerHTML = document.getElementById('team_number_in').value;
+	
      /* autonomous */
     document.getElementById("auto_pts_display").innerHTML = auto_goals[0].points;   /* points made in auton */
     document.getElementById("auto_miss_display").innerHTML = auto_goals[1].points;  /* points missed in auton */

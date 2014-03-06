@@ -383,7 +383,7 @@
 			}
 
 			#FeatureDataStrings, #FeatureValues, #BallsAndPoints, #StartLocation, #ShootingData,  #position, #BallsAndPoints,#TeleScoring,
-			#MatchDataStrings, #MatchDataValues, #frm_loading_location, #frm_shooting_location, #FeatureComments, #teamLabel, #teamDisp,
+			#MatchDataStrings, #MatchDataValues, #frm_loading_location, #frm_shooting_location, #FeatureComments, #teamDisp,
 			#Possession, #ShootingData,#Truss, #general, #TeleopSliders, #teamDisp, #undoAutoScore, #autoPoints {
     			display: inline-block;
     			vertical-align: top;
@@ -695,7 +695,7 @@
 			 */
 			function update_data()
 			{ 
-				   /* autonomous data */
+			   /* autonomous data */
 			        auto_starting_ball = document.getElementById('starting_ball').checked;
 			        auto_floor_ball = document.getElementById('floor_pickup').checked;
 			        auto_in_area = document.getElementById('in_area').checked;
@@ -704,8 +704,8 @@
 			        tele_front_court = document.frm_shooting_location.shooting_location[0];
 			        tele_full_court = document.frm_shooting_location.shooting_location[1];
 			
-			        tele_human_loading = document.frm_loading_location.loading_location[0];
-			        tele_floor_loading = document.frm_loading_location.loading_location[1];
+			        //tele_human_loading = document.frm_loading_location.loading_location[0];
+			        //tele_floor_loading = document.frm_loading_location.loading_location[1];
 			        
 			        tele_driving = document.getElementById('driving_ability').value;
 			        tele_robot_block = document.getElementById('robot_block').value;
@@ -734,6 +734,8 @@
 			 */
 			function disp_update()
 			{
+				document.getElementById('teamDisp').innerHTML = document.getElementById('team_number_in').value;
+				
 			    /* autonomous */
 			    document.getElementById("auto_pts_display").innerHTML = auto_goals[0].points;   /* points made in auton */
 			    document.getElementById("auto_miss_display").innerHTML = auto_goals[1].points;  /* points missed in auton */
@@ -1299,12 +1301,7 @@
     </head>
     <body>        
        <h1>Green Bean Casserole: Match Scouting System</h1>
-        <div id="teamLabel">
-	       Team Number<br>
-        </div>
-        <div id="teamDisp">
-       		<input type="tel" name="team_number_in" id="team_number_in" placeholder="0" onchange="disp_update();"><br>
-       	</div>
+        <h2>Currently Scouting Team: <div id="teamDisp">0</div></h2>
         <ul id="tabs" class='tabs'>
             <li><a href='#MatchData'>Match Info</a></li>
             <li><a href='#Features' id="PitDataButton">Pit Scouting</a></li>
@@ -1319,11 +1316,13 @@
             <!-- ----------Match Data---------- -->
             <!-- ------------------------------ -->
             <div id="MatchDataStrings">
+				Team Number<br>
                 Scout Name<br>
                 Match Number<br>
                 Match Type
             </div>
             <div id="MatchDataValues">
+				<input type="tel" name="team_number_in" id="team_number_in" placeholder="0" onchange="disp_update();"><br>
                 <input type="text" name="scout_name_in" id="scout_name_in" placeholder="*"><br>
                 <input type="tel" name="match_number_in" id="match_number_in" placeholder="0"><br>
                 <select name="match_type" id="match_type" onchange="Hide_Tabs();">
@@ -1593,7 +1592,7 @@
 				
 			<div id="general">
 				
-				<h3> Penalties & Failures </h3>
+				<h3> Penalties & Fouls </h3>
 				<br>
                 <button onclick="Penalty('penalty');">Penalty</button>
                 <button onclick="Penalty('technical');">Technical Foul</button>
