@@ -30,7 +30,7 @@
         <div id="teamDisp">
        		<input type="tel" name="team_number_in" id="team_number_in" placeholder="0" onchange="disp_update();"><br>
        	</div>
-        <ul class='tabs'>
+        <ul id="tabs" class='tabs'>
             <li><a href='#MatchData'>Match Info</a></li>
             <li><a href='#Features' id="PitDataButton">Pit Scouting</a></li>
             <li><a href='#AutonomousData' id="AutonomousDataButton">Autonomous</a></li>
@@ -153,12 +153,14 @@
                     <button onclick="Ball_Score('autonomous', 'miss', 'hot_low');">Hot Low Goal</button>
                     <button onclick="Ball_Score('autonomous', 'miss', 'low');">Low Goal</button>
                 <br>
-                Points Scored: <a id="auto_pts_display">0</a>
-                <br>
-                Points Missed: <a id="auto_miss_display">0</a>
-                <br>
-                <button onclick="Undo_Score('autonomous');">Undo</button>
-                <br>
+                <div id="autoPoints">
+                	Points Scored: <a id="auto_pts_display">0</a>
+                	<br>
+                	Points Missed: <a id="auto_miss_display">0</a>
+                	<br>
+               </div>
+                <button id="undoAutoScore" onclick="Undo_Score('autonomous');">Undo</button>
+                <br><br>
                 <button onclick="Penalty('penalty');">Penalty</button>
                 <button onclick="Penalty('technical');">Technical Foul</button>
                 <br>
@@ -193,80 +195,103 @@
             <!-- ----------Teleoperated Period---------- -->
             <!-- --------------------------------------- -->
  
-            <div id="ShootingData">
-            	<form name="position" id="position">
-            		Position:<br>
-            		Inbounder: <input type="checkbox" name="pos_Inbounder" id="pos_Inbounder">
-            		MidCourt: <input type="checkbox" name="pos_MidCourt" id="Pos_MidCourt">
-            		Shooter: <input type="checkbox" name = "pos_Shooter" id="Pos_Shooter">
-            	</form>
-            	<br><br>
-                <form name="frm_shooting_location" id="frm_shooting_location">
-                    Shooting Range:<br>
-                    <input type="checkbox" name="shooting_location" id="Front_shoot">0-10ft<br>
-                    <input type="checkbox" name="shooting_location" id="Full_shoot">11-24ft<br>
-                </form>
-
-                <form name="frm_loading_location" id="frm_loading_location">
-                    Ball Loading Location:<br>
-                    <input type="checkbox" name="loading_location" id="Human_load">Human Loading/Top Loading<br>
-                    <input type="checkbox" name="loading_location" id="Floor_load">Floor Pickup<br>
-                </form>
-
-                <div id="TeleopMade">Made:
-                    <button onclick="Ball_Score('teleop', 'make', 'high');">High Goal</button>
-                    <button onclick="Ball_Score('teleop', 'make', 'low');">Low Goal</button>
-                </div>
-                <div id="TeleopMissed">Missed:
-                    <button onclick="Ball_Score('teleop', 'miss', 'high');">High Goal</button>
-                    <button onclick="Ball_Score('teleop', 'miss', 'low');">Low Goal</button>
-                </div>
-                Points Scored: <a id="tele_pts_display">0</a>
-                <br>
-                Points Missed: <a id="tele_miss_display">0</a>
-                <br>
-                <button onclick="Undo_Score('teleop');">Undo</button>
-                <br>
-                
-              	Dead Ball: <input type="checkbox" name="deadball" id="deadball">
-              	Broke Down: <input type="checkbox" name="brokedown" id="brokedown">
-
-				<br><br>
-                <button onclick="Penalty('penalty');">Penalty</button>
-                <button onclick="Penalty('technical');">Technical Foul</button>
-                <br>
-                <a>Penalties :  </a><a id="penalty_display2">0</a>
-                <br>
-                <a>Technical Fouls :  </a><a id="technical_display2">0</a>
-                <br>
-                <button onclick="Undo_Penalty();">Undo Penalty</button>
-                <br>
-
-            </div>
-            
-            <div id="TeleopSliders">
-            	<a>Passing: </a><br>
+			<div id="Possession">
+				<h3> Possession </h3>
+				<a>Receive from Human: </a><br>
             	<a>Made: </a><a id="pass_made_display">0</a>
             	<a>   /   </a>
             	<a>Missed: </a><a id="pass_miss_display">0</a><br>
             	<button onclick="tele_attempt_change('made', '0', '1');">Made</button>
             	<button onclick="tele_attempt_change('miss', '0', '1');">Miss</button>
             	<br>
-            	<a>Truss Throwing: </a><br>
+
+            	<a>Receive from Robot: </a><br>
+            	<a>Made: </a><a id="pass_made_display">0</a>
+            	<a>   /   </a>
+            	<a>Missed: </a><a id="pass_miss_display">0</a><br>
+            	<button onclick="tele_attempt_change('made', '0', '1');">Made</button>
+            	<button onclick="tele_attempt_change('miss', '0', '1');">Miss</button>
+            	<br>
+            	
+            	<a>Floor Pickup: </a><br>
+            	<a>Made: </a><a id="pass_made_display">0</a>
+            	<a>   /   </a>
+            	<a>Missed: </a><a id="pass_miss_display">0</a><br>
+            	<button onclick="tele_attempt_change('made', '0', '1');">Made</button>
+            	<button onclick="tele_attempt_change('miss', '0', '1');">Miss</button>
+            	<br>
+            	<button id="undoReceiveAttempt" onclick="tele_attempt_change('null', 'null', '-1');">Undo Recieve</button>
+				<br>            	
+            	<br> <br>
+				
+			</div>
+
+			<div id="Truss">
+				<h3> Truss Action </h3>
+
+            	<a>Truss to Human: </a><br>
             	<a>Made: </a><a id="truss_throw_made_display">0</a>
             	<a>   /   </a>
             	<a>Missed: </a><a id="truss_throw_miss_display">0</a><br>
             	<button onclick="tele_attempt_change('made', '1', '1');">Made</button>
             	<button onclick="tele_attempt_change('miss', '1', '1');">Miss</button>
-            	<button id="undoAttempt" onclick="tele_attempt_change('null', 'null', '-1');">Undo Attempt</button>
             	<br>
-            	<a>Truss Catching: </a><br>
+            	<a>Truss to Robot: </a><br>
             	<a>Made: </a><a id="truss_catch_made_display">0</a>
             	<a>   /   </a>
             	<a>Missed: </a><a id="truss_catch_miss_display">0</a><br>
             	<button onclick="tele_attempt_change('made', '2', '1');">Made</button>
             	<button onclick="tele_attempt_change('miss', '2', '1');">Miss</button>
             	<br>
+            	<a>Truss to Field: </a><br>
+            	<a>Made: </a><a id="truss_catch_made_display">0</a>
+            	<a>   /   </a>
+            	<a>Missed: </a><a id="truss_catch_miss_display">0</a><br>
+            	<button onclick="tele_attempt_change('made', '2', '1');">Made</button>
+            	<button onclick="tele_attempt_change('miss', '2', '1');">Miss</button>
+            	<br>
+            	<button id="undoTrussAttempt" onclick="tele_attempt_change('null', 'null', '-1');">Undo Truss</button>
+            	<br> <br>
+            	<br> 
+            </div>
+
+            <div id="ShootingData">
+				<h3> Shooting </h3>
+
+                <div id="TeleopMade">Made:
+                    <button onclick="Ball_Score('teleop', 'make', 'high');">High Goal</button>
+                    <button onclick="Ball_Score('teleop', 'make', 'low');">Low Goal</button>
+                </div>
+                
+                <div id="TeleopMissed">Missed:
+                    <button onclick="Ball_Score('teleop', 'miss', 'high');">High Goal</button>
+                    <button onclick="Ball_Score('teleop', 'miss', 'low');">Low Goal</button>
+                </div>
+                
+                Points Scored: <a id="tele_pts_display">0</a>
+                <br>
+                Points Missed: <a id="tele_miss_display">0</a>
+                <br><br>
+                <button id="undoGoal" onclick="Undo_Score('teleop');">Undo Goal</button>
+                <br>
+                
+                <form name="frm_shooting_location" id="frm_shooting_location">
+                    Shooting Range:<br>
+                    <input type="checkbox" name="shooting_location" id="Front_shoot">0-10ft<br>
+                    <input type="checkbox" name="shooting_location" id="Full_shoot">11-24ft<br>
+                </form>
+                <br>
+                Dead Ball: <input type="checkbox" name="deadball" id="deadball">
+                <br> <br>
+             </div>
+
+			
+			<div id="TeleopSliders">  
+				<h3> Driving & Defense </h3>
+
+				<!-- ---------- Driving and Defense --------- -->
+				Broke Down: <input type="checkbox" name="brokedown" id="brokedown">
+				<br><br>
                 <a>How's My Driving? :  </a>
                 <a id="tele_driving_display">Little or No Movement</a>
                 <div id="shortslider">
@@ -283,11 +308,35 @@
                 
                 <a>Defense Time   :  </a>
                 <a id="tele_robot_block_time_display">0</a> seconds
-                <div id="slider">
-                    <input class="bar" type="range" id ="robot_block_time" name="robot_block_time" min="0" max="140" step="10" value ="0" onchange="Update_Stuff();">
+                <div id="shortslider">
+                    <input class="bar" type="range" id ="robot_block_time" name="robot_block_time" min="0" max="140" step="20" value ="0" onchange="Update_Stuff();">
                     <span class="highlight"></span>
                 </div>
-            </div>
+                <br> <br> <br> <br>
+			</div>
+				
+			<div id="general">
+				
+				<h3> Penalties & Failures </h3>
+				<br>
+                <button onclick="Penalty('penalty');">Penalty</button>
+                <button onclick="Penalty('technical');">Technical Foul</button>
+                <br>
+                <a>Penalties :  </a><a id="penalty_display2">0</a>
+                <br>
+                <a>Technical Fouls :  </a><a id="technical_display2">0</a>
+                <br>
+                <button onclick="Undo_Penalty();">Undo Penalty</button>
+                <br>
+	
+            	<br> <br>
+            	<br> <br>
+                <br> <br> 
+                <br> <br>
+
+			</div>
+
+
         </div>
         
 

@@ -364,15 +364,25 @@ li {
     display: inline-block;
 }
 
-#FeatureDataStrings, #FeatureValues, #BallsAndPoints, #StartLocation, #ShootingData, #TeleopSliders, #position, #BallsAndPoints,#TeleScoring,
-#MatchDataStrings, #MatchDataValues, #frm_loading_location, #frm_shooting_location, #FeatureComments, #teamLabel, #teamDisp {
+#FeatureDataStrings, #FeatureValues, #BallsAndPoints, #StartLocation, #ShootingData,  #position, #BallsAndPoints,#TeleScoring,
+#MatchDataStrings, #MatchDataValues, #frm_loading_location, #frm_shooting_location, #FeatureComments, #teamLabel, #teamDisp,
+#Possession, #ShootingData,#Truss, #general, #TeleopSliders, #teamDisp, #undoAutoScore, #autoPoints {
     display: inline-block;
-    vertical-align: middle;
+    vertical-align: top;
 }
 
-#StartLocation, #TeleopSliders, #TeleScoring, #frm_loading_location, #FeatureComments {
-    margin-left: 40px;
+
+#tabs {
+    margin-left: 10px;
+} 
+#StartLocation,  #TeleScoring, #frm_loading_location, #FeatureComments, #TeleopSliders, #Possession, #undoAutoScore   {
+    margin-left: 15px;
 }
+
+#ShootingData,#Truss, #general {
+    margin-left: 20px;
+}
+
 
 #MatchDataStrings {
     line-height: 2.4em; 
@@ -382,7 +392,7 @@ li {
     width: 750px;
 }
 
-#undoAttempt {
+#undoTrussAttempt, #undoReceiveAttempt, #undoGoal {
 	margin-left: 3em;
 }
 
