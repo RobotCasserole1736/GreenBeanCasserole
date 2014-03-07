@@ -12,6 +12,8 @@
 /* constructor for goals_t objects */
 
 window.onload=function(){Update_Stuff(); Hide_Tabs();};
+
+
 /* constructor for goals_t objects */
 function goal_t(hot_high, high, hot_low, low, in_area, points)
 {
@@ -36,8 +38,8 @@ function goal_t(hot_high, high, hot_low, low, in_area, points)
     auto_goals[0] = new goal_t(0,0,0,0,0,0);
     auto_goals[1] = new goal_t(0,0,0,0,0,0);
 
-	var tele_attempts_made = [0,0,0];
-	var tele_attempts_miss = [0,0,0];
+	var tele_attempts_made = [0,0,0,0,0,0,0,0,0,0];
+	var tele_attempts_miss = [0,0,0,0,0,0,0,0,0,0];
 
     var auto_starting_ball = 0;
     var auto_floor_ball = 0;
@@ -99,6 +101,7 @@ function update_data()
         tele_robot_block = document.getElementById('robot_block').value;
         tele_robot_block_time = document.getElementById('robot_block_time').value;
         
+	/* features data ??  */
         low_pass = document.getElementById('low_pass').checked;
         high_pass = document.getElementById('high_pass').checked;
 		high_goal = document.getElementById('high_goal').checked;
@@ -129,15 +132,24 @@ function disp_update()
     document.getElementById("auto_miss_display").innerHTML = auto_goals[1].points;  /* points missed in auton */
     
     /* teleop */
-    document.getElementById("tele_pts_display").innerHTML = tele_goals[0].points;   /* points made in teleop */
-    document.getElementById("tele_miss_display").innerHTML = tele_goals[1].points;  /* points missed in teleop */
-   
-    document.getElementById("pass_made_display").innerHTML = tele_attempts_made[0];
-    document.getElementById("pass_miss_display").innerHTML = tele_attempts_miss[0];
-    document.getElementById("truss_throw_made_display").innerHTML = tele_attempts_made[1];
-    document.getElementById("truss_throw_miss_display").innerHTML = tele_attempts_miss[1];
-    document.getElementById("truss_catch_made_display").innerHTML = tele_attempts_made[2];
-    document.getElementById("truss_catch_miss_display").innerHTML = tele_attempts_miss[2];
+  
+    document.getElementById("tele_pts_display").innerHTML = tele_goals[0].points;   /* points made in auton */
+    document.getElementById("tele_miss_display").innerHTML = tele_goals[1].points;  /* points missed in auton */
+
+
+    document.getElementById("truss_human_made_display").innerHTML = tele_attempts_made[1];   /* truss to human made in teleop  */
+    document.getElementById("truss_catch_made_display").innerHTML = tele_attempts_made[2];   /* truss to robot made in teleop  */
+    document.getElementById("truss_field_made_display").innerHTML = tele_attempts_made[3];   /* truss to field made in teleop  */
+    document.getElementById("truss_miss_display").innerHTML = tele_attempts_miss[4]; 		 /* truss attempt missed in teleop */
+	
+    document.getElementById("human_pass_made_display").innerHTML = tele_attempts_made[5];   /* human pass made in teleop  */
+    document.getElementById("human_pass_miss_display").innerHTML = tele_attempts_miss[5];
+    document.getElementById("robot_pass_made_display").innerHTML = tele_attempts_made[6];   /* robot pass made in teleop  */
+    document.getElementById("robot_pass_miss_display").innerHTML = tele_attempts_miss[6];
+    document.getElementById("field_pickup_made_display").innerHTML = tele_attempts_made[7];   /* field pickup made in teleop  */
+    document.getElementById("field_pickup_miss_display").innerHTML = tele_attempts_miss[7];
+
+
     
     switch(tele_driving)
     {
@@ -237,6 +249,7 @@ function sum_points(var_config)
 function new_ball_score(period, status, goal)
 {
     score_change(period, status, goal, 1);
+    
 }
 
 /* 
@@ -249,7 +262,8 @@ function score_change(period, status, goal, change)
     switch(status)
     {
     case 'make':
-        status_l = 0; break;
+        status_l = 0; 
+        break;
     case 'miss':
         status_l = 1; break;
     }
@@ -259,14 +273,16 @@ function score_change(period, status, goal, change)
     {
         if(change > 0)
             auto_score_stack.push([status, goal]);
+
         auto_goals[status_l][goal]=auto_goals[status_l][goal]+change;
     }
     
     /* teleoperated */
     if ( period === 'teleop')
     {
-        if(change > 0)
-            tele_score_stack.push([status, goal]);
+        if(change > 0)  {
+            tele_score_stack.push([status, goal]);  }
+
         tele_goals[status_l][goal]=tele_goals[status_l][goal]+change;
     }
 
@@ -331,8 +347,9 @@ function save_data()
   // teleop tab fields
     matchData += (document.getElementById("Front_shoot").checked ? "T" : "F") + ",";
     matchData += (document.getElementById("Full_shoot").checked ? "T" : "F") + ",";
-    matchData += (document.getElementById("Human_load").checked ? "T" : "F") + ",";
-    matchData += (document.getElementById("Floor_load").checked ? "T" : "F") + ",";
+    //matchData += (document.getElementById("Human_load").checked ? "T" : "F") + ",";
+    //matchData += (document.getElementById("Floor_load").checked ? "T" : "F") + ",";
+
     matchData += document.getElementById("tele_pts_display").innerHTML + ",";
     matchData += document.getElementById("tele_miss_display").innerHTML + ",";
     matchData += document.getElementById("penalty_display2").innerHTML + ",";
@@ -340,15 +357,16 @@ function save_data()
     matchData += document.getElementById("driving_ability").value + ",";
     matchData += document.getElementById("robot_block").value + ",";
     matchData += document.getElementById("robot_block_time").value + ",";
-    matchData += tele_attempts_made[0] + ",";
-    matchData += tele_attempts_miss[0] + ",";
-    matchData += tele_attempts_made[1] + ",";
-    matchData += tele_attempts_miss[1] + ",";
-    matchData += tele_attempts_made[2] + ",";
-    matchData += tele_attempts_miss[2] + ",";
-    matchData += (document.getElementById("pos_Inbounder").checked ? "T" : "F") + ",";
-    matchData += (document.getElementById("Pos_MidCourt").checked ? "T" : "F") + ",";
-    matchData += (document.getElementById("Pos_Shooter").checked ? "T" : "F") + ",";
+    matchData += tele_attempts_made[5] + ",";		// human pass to robot
+    matchData += tele_attempts_miss[5] + ",";		// 
+    matchData += tele_attempts_made[6] + ",";		// robot pass to robot
+    matchData += tele_attempts_miss[6] + ",";		// 
+    matchData += tele_attempts_made[7] + ",";		// field pickup 
+    matchData += tele_attempts_miss[7] + ",";		// 
+    matchData += tele_attempts_made[1] + ",";		// truss to human
+    matchData += tele_attempts_made[2] + ",";		// truss to robot
+    matchData += tele_attempts_made[3] + ",";		// truss to field
+    matchData += tele_attempts_miss[4] + ",";		// truss missed
     matchData += (document.getElementById("deadball").checked ? "T" : "F") + ",";
     matchData += (document.getElementById("brokedown").checked ? "T" : "F") + ",";
     matchData += document.getElementById("Overall_Rating").value + ",";
@@ -367,10 +385,7 @@ function save_data()
     sharedData += document.getElementById("technical_display1").innerHTML + ",";
     sharedData += document.getElementById("Location").value + ",";
   // teleop tab fields
-    sharedData += (document.getElementById("Front_shoot").checked ? "T" : "F") + ",";
-    sharedData += (document.getElementById("Full_shoot").checked ? "T" : "F") + ",";
-    sharedData += (document.getElementById("Human_load").checked ? "T" : "F") + ",";
-    sharedData += (document.getElementById("Floor_load").checked ? "T" : "F") + ",";
+
     sharedData += document.getElementById("tele_pts_display").innerHTML + ",";
     sharedData += document.getElementById("tele_miss_display").innerHTML + ",";
     sharedData += document.getElementById("penalty_display2").innerHTML + ",";
@@ -378,15 +393,16 @@ function save_data()
     sharedData += document.getElementById("driving_ability").value + ",";
     sharedData += document.getElementById("robot_block").value + ",";
     sharedData += document.getElementById("robot_block_time").value + ",";
-    sharedData += tele_attempts_made[0] + ",";
-    sharedData += tele_attempts_miss[0] + ",";
-    sharedData += tele_attempts_made[1] + ",";
-    sharedData += tele_attempts_miss[1] + ",";
-    sharedData += tele_attempts_made[2] + ",";
-    sharedData += tele_attempts_miss[2] + ",";
-    sharedData += (document.getElementById("pos_Inbounder").checked ? "T" : "F") + ",";
-    sharedData += (document.getElementById("Pos_MidCourt").checked ? "T" : "F") + ",";
-    sharedData += (document.getElementById("Pos_Shooter").checked ? "T" : "F") + ",";
+    sharedData += tele_attempts_made[5] + ",";		// human pass to robot
+    sharedData += tele_attempts_miss[5] + ",";		// 
+    sharedData += tele_attempts_made[6] + ",";		// robot pass to robot
+    sharedData += tele_attempts_miss[6] + ",";		// 
+    sharedData += tele_attempts_made[7] + ",";		// field pickup 
+    sharedData += tele_attempts_miss[7] + ",";		// 
+    sharedData += tele_attempts_made[1] + ",";		// truss to human
+    sharedData += tele_attempts_made[2] + ",";		// truss to robot
+    sharedData += tele_attempts_made[3] + ",";		// truss to field
+    sharedData += tele_attempts_miss[4] + ",";		// truss missed
     sharedData += (document.getElementById("deadball").checked ? "T" : "F") + ",";
     sharedData += (document.getElementById("brokedown").checked ? "T" : "F") + "\n";
 
@@ -484,12 +500,10 @@ function reset_form()
     tele_score_stack = new Array();
     document.getElementById("Front_shoot").checked = false;
     document.getElementById("Full_shoot").checked = false;
-    document.getElementById("Human_load").checked = false;
-    document.getElementById("Floor_load").checked = false;
     tele_goals[0] = new goal_t(0,0,0,0,0);
     tele_goals[1] = new goal_t(0,0,0,0,0);
-    tele_attempts_made = [0,0,0];
-	tele_attempts_miss = [0,0,0];
+	tele_attempts_made = [0,0,0,0,0,0,0,0,0,0];
+	tele_attempts_miss = [0,0,0,0,0,0,0,0,0,0];
     tele_front_court = 0;
     tele_full_court = 0;
     tele_human_loading = 0;    
@@ -498,9 +512,6 @@ function reset_form()
     document.getElementById("driving_ability").value = 0;
     document.getElementById("robot_block").value = 0;
     document.getElementById("robot_block_time").value = 0;
-    document.getElementById("pos_Inbounder").checked = false;
-    document.getElementById("Pos_MidCourt").checked = false;
-    document.getElementById("Pos_Shooter").checked = false;
     document.getElementById('Overall_Rating').value = 0;
     document.getElementById("deadball").checked = false;
     document.getElementById("brokedown").checked = false;

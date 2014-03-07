@@ -195,29 +195,30 @@
 			<div id="Possession">
 				<h3> Possession </h3>
 				<a>Receive from Human: </a><br>
-            	<a>Made: </a><a id="pass_made_display">0</a>
+            	<a>Made: </a><a id="human_pass_made_display">0</a>
             	<a>   /   </a>
-            	<a>Missed: </a><a id="pass_miss_display">0</a><br>
-            	<button onclick="tele_attempt_change('made', '0', '1');">Made</button>
-            	<button onclick="tele_attempt_change('miss', '0', '1');">Miss</button>
+            	<a>Missed: </a><a id="human_pass_miss_display">0</a><br>
+            	<button onclick="tele_attempt_change('made', '5', '1');">Made</button>
+            	<button onclick="tele_attempt_change('miss', '5', '1');">Miss</button>
             	<br>
 
             	<a>Receive from Robot: </a><br>
-            	<a>Made: </a><a id="pass_made_display">0</a>
+            	<a>Made: </a><a id="robot_pass_made_display">0</a>
             	<a>   /   </a>
-            	<a>Missed: </a><a id="pass_miss_display">0</a><br>
-            	<button onclick="tele_attempt_change('made', '0', '1');">Made</button>
-            	<button onclick="tele_attempt_change('miss', '0', '1');">Miss</button>
+            	<a>Missed: </a><a id="robot_pass_miss_display">0</a><br>
+            	<button onclick="tele_attempt_change('made', '6', '1');">Made</button>
+            	<button onclick="tele_attempt_change('miss', '6', '1');">Miss</button>
             	<br>
             	
             	<a>Floor Pickup: </a><br>
-            	<a>Made: </a><a id="pass_made_display">0</a>
+            	<a>Made: </a><a id="field_pickup_made_display">0</a>
             	<a>   /   </a>
-            	<a>Missed: </a><a id="pass_miss_display">0</a><br>
-            	<button onclick="tele_attempt_change('made', '0', '1');">Made</button>
-            	<button onclick="tele_attempt_change('miss', '0', '1');">Miss</button>
+            	<a>Missed: </a><a id="field_pickup_miss_display">0</a><br>
+            	<button onclick="tele_attempt_change('made', '7', '1');">Made</button>
+            	<button onclick="tele_attempt_change('miss', '7', '1');">Miss</button>
+            	<br> 
             	<br>
-            	<button id="undoReceiveAttempt" onclick="tele_attempt_change('null', 'null', '-1');">Undo Recieve</button>
+            	<button id="undoPassAttempt" onclick="tele_attempt_change('null', 'null', '-1');">Undo Possess or Truss Attempt</button>
 				<br>            	
             	<br> <br>
 				
@@ -226,29 +227,18 @@
 			<div id="Truss">
 				<h3> Truss Action </h3>
 
-            	<a>Truss to Human: </a><br>
-            	<a>Made: </a><a id="truss_throw_made_display">0</a>
-            	<a>   /   </a>
-            	<a>Missed: </a><a id="truss_throw_miss_display">0</a><br>
-            	<button onclick="tele_attempt_change('made', '1', '1');">Made</button>
-            	<button onclick="tele_attempt_change('miss', '1', '1');">Miss</button>
+            	<a>Truss to Human: </a><a id="truss_human_made_display">0</a><br>
+             	<button onclick="tele_attempt_change('made', '1', '1');">Made</button>
             	<br>
-            	<a>Truss to Robot: </a><br>
-            	<a>Made: </a><a id="truss_catch_made_display">0</a>
-            	<a>   /   </a>
-            	<a>Missed: </a><a id="truss_catch_miss_display">0</a><br>
-            	<button onclick="tele_attempt_change('made', '2', '1');">Made</button>
-            	<button onclick="tele_attempt_change('miss', '2', '1');">Miss</button>
+            	<a>Truss to Robot: </a><a id="truss_catch_made_display">0</a><br>
+             	<button onclick="tele_attempt_change('made', '2', '1');">Made</button>
             	<br>
-            	<a>Truss to Field: </a><br>
-            	<a>Made: </a><a id="truss_catch_made_display">0</a>
-            	<a>   /   </a>
-            	<a>Missed: </a><a id="truss_catch_miss_display">0</a><br>
-            	<button onclick="tele_attempt_change('made', '2', '1');">Made</button>
-            	<button onclick="tele_attempt_change('miss', '2', '1');">Miss</button>
-            	<br>
-            	<button id="undoTrussAttempt" onclick="tele_attempt_change('null', 'null', '-1');">Undo Truss</button>
-            	<br> <br>
+            	<a>Truss to Field: </a><a id="truss_field_made_display">0</a><br>
+            	<button onclick="tele_attempt_change('made', '3', '1');">Made</button>
+             	<br>
+             	<a>Truss Attempt Missed: </a><a id="truss_miss_display">0</a><br>
+            	<button onclick="tele_attempt_change('miss', '4', '1');">Miss</button>
+             	<br>
             	<br> 
             </div>
 
@@ -277,7 +267,7 @@
                 <br>
                 <form name="frm_shooting_location" id="frm_shooting_location">
                      Shooting Range:<br>
-                    <input type="checkbox" name="shooting_location" id="Front_shoot">0-10ft<br>
+                    <input type="checkbox" name="shooting_location" id="Front_shoot">0-10ft  <a>  /  </a>
                     <input type="checkbox" name="shooting_location" id="Full_shoot">11-24ft<br>
                 </form>
                 <br> <br>
