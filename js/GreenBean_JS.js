@@ -352,8 +352,6 @@ function save_data()
 
     matchData += document.getElementById("tele_pts_display").innerHTML + ",";
     matchData += document.getElementById("tele_miss_display").innerHTML + ",";
-    matchData += document.getElementById("penalty_display2").innerHTML + ",";
-    matchData += document.getElementById("technical_display2").innerHTML + ",";
     matchData += document.getElementById("driving_ability").value + ",";
     matchData += document.getElementById("robot_block").value + ",";
     matchData += document.getElementById("robot_block_time").value + ",";
@@ -388,8 +386,6 @@ function save_data()
 
     sharedData += document.getElementById("tele_pts_display").innerHTML + ",";
     sharedData += document.getElementById("tele_miss_display").innerHTML + ",";
-    sharedData += document.getElementById("penalty_display2").innerHTML + ",";
-    sharedData += document.getElementById("technical_display2").innerHTML + ",";
     sharedData += document.getElementById("driving_ability").value + ",";
     sharedData += document.getElementById("robot_block").value + ",";
     sharedData += document.getElementById("robot_block_time").value + ",";
